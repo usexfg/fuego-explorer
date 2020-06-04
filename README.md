@@ -1,7 +1,6 @@
-# XFG ChainXplorer
-Block Explorer for Fango cryptocurrency
+# XFG Block Explorer
 
-Runs on data from your fandomgold dæmon node. Should be ready to go for use on web servers (AWS, Digital Ocean)
+Runs on data from your fandomgold node dæmon. Should be ready to go for use on web servers (AWS, Digital Ocean)
 
 Start your Fango dæmon using command:
 
