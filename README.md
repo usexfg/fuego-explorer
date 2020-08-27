@@ -8,4 +8,4 @@ Start your Fango dæmon using command:
 
 Change config.js to point to your dæmon. Files go to your web root folder (/var/www/html for apache)
 
-Join us in :point_right: [Discord](http://discord.fango.money)
+Join us in :point_right: [Discord](http://discord.fandom.gold)
