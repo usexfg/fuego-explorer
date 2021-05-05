@@ -26,10 +26,10 @@ function checkTxn(transactionResponse, privateKey, address, privateKeyType) {
         owned: [],
         unowned: [],
     };
-    var s = 8, m = s + 64, e = m + 64; //offsets
+    var t = 4, s = 8, m = t + 64, e = m + 64; //offsets
     if (privateKey.length !== 64 || validHex(privateKey) !== true){
         results.error = "Invalid private key.";
-    } else if (address.length != 99 || (addrHex.slice(-s) !== cn_fast_hash(addrHex.slice(0,-s)).slice(0,s))) {
+    } else if (address.length != 98 || (addrHex.slice(-s) !== cn_fast_hash(addrHex.slice(0,-s)).slice(0,s))) {
         results.error = "Bad address";
     } else if (privateKeyType === 'view' && addrHex.slice(m,e) !== sec_key_to_pub(privateKey)) {
 	results.error = "Secret View key does not match address.";
@@ -45,10 +45,10 @@ function checkTxn(transactionResponse, privateKey, address, privateKeyType) {
             results.error = "Unrecognized tx_extra format!";
         } else {
             var der = cnUtil.generate_key_derivation(pub, privateKey);
-            var spk = addrHex.slice(s,m);
-            for (i = 0; i < txn.vout.length; i++) {
+            var spk = addrHex.slice(t,m);
+            for (let i = 0; i < txn.vout.length; i++) {
                 var pubkey = cnUtil.derive_public_key(der, i, spk);
-                var amount = txn.vout[i].amount / 10000000;
+                var amount = txn.vout[i].amount / 1000000;
                 if (pubkey === txn.vout[i].target.data.key) {
                     results.total_owned += amount;
                     results.owned.push([i, pubkey, amount]);
@@ -115,4 +115,3 @@ $("#check_transaction").click(function() {
         }
     });
 });
-

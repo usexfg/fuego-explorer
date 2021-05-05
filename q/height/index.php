@@ -1,11 +1,7 @@
 <?php
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_URL, 'http://zirtysperzys.info:18180/getinfo');
-$result = curl_exec($ch);
-$obj = json_decode($result, TRUE);
-curl_close($ch);
-print_r($obj['last_known_block_index']);
-?>
+require '../util.php';
+$config = (require '../../config.php');
 
+$info = fetch_getinfo($config['api']);
+
+print_r($info['last_known_block_index']);

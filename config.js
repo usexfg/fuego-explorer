@@ -1,8 +1,7 @@
-var api = 'http://zirtysperzys.info:18180';
-var apiList = [];
+var api = 'http://104.236.0.16:18180';
+var poolListUrl = '';
+var donationAddress = "";
 var blockTargetInterval = 480;
 var coinUnits = 10000000;
 var symbol = 'XFG';
-var refreshDelay = 18000;
-var networkStat = {
-};
+var refreshDelay = 5000;
