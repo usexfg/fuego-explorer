@@ -1,4 +1,4 @@
-# XFG Block Explorer
+# XFG Explorer
 
 Runs on data from your fango dæmon. Should be ready to go for use on web servers.
 
