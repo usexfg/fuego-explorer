@@ -1,16 +1,14 @@
-# Conceal Explorer
-Block explorer for Conceal CryptoNote based cryptocurrency.
+# XFG Block Explorer
 
-#### Installation
+Runs on data from your fango dæmon. Should be ready to go for use on web servers.
 
-1) It takes data from daemon conceald. It should be accessible from the Internet. Run conceald with open port as follows:
-```bash
-./conceald --enable-cors="*" --enable_blockexplorer --rpc-bind-ip=0.0.0.0 --rpc-bind-port=16000
-```
-2) Just upload to your website and change 'api' variable in config.js to point to your daemon.
+Start your Fango dæmon using command:
 
-### Development
-Devs: @taegus @katz @devopsralf
+<sup>```./fangod --restricted-rpc --enable-cors=* --enable-blockchain-indexes --rpc-bind-ip=0.0.0.0 --rpc-bind-port=18180```</sup>
+
+Change config.js to point to your dæmon. Files go to your web root folder (/var/www/html)
+
+Join us in :point_right: [Discord](http://discord.fandom.gold) 
 
 ### Note
-A lot of this code is from the great Karbovanets/Karbowanec-Blockchain-Explorer
+Based on code from the Conceal Explorer & Karbovanets/Karbowanec-Blockchain-Explorer
