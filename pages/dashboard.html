@@ -29,7 +29,7 @@
         <div class="col-lg-4">
           <div class="dash-content dash-small-info">
             <label class="tx-primary" tkey="totalSupply">Total Supply</label>
-            <label class="tx-primary" id="totalCoinsPct">(100%)</label><BR>
+            <label class="tx-primary" id="totalCoinsPct">(94%)</label><BR>
             <label class="tx-secondary" tkey="totalSupplyInfo">The total supply minted to date.</label>
             <h2><span id="totalCoins">N/A</span></h2>
           </div><!-- dash-content -->
@@ -47,7 +47,7 @@
       <div class="dasboard-box">
         <h1 class="tx-white tx-56 tx-lato tx-bold"><span id="networkDifficulty">N/A</span></h1>
         <h6 class="tx-15 tx-primary tx-bold mg-b-20" tkey="netDifficulty">Network Difficulty</h6>
-        <p tkey="netDiffInfo">Chart on the right show the network difficulty for the last 30 blocks.</p>
+        <p tkey="netDiffInfo">Chart on the right shows network difficulty for the last 30 blocks.</p>
         <a data-page="explorer.html" href="#explorer" class="statement-link" tkey="netExplorer">Network Explorer<i
             class="fa fa-angle-right mg-l-5"></i></a>
         <p class="tx-12"></p>
@@ -223,7 +223,6 @@
   var diffAreaChart = null;
   var marketPriceAreaChart = null;
 
-
   // Automatically update profit calculation on key press
   $('#calcHashRate').keyup(calcEstimateProfit).change(calcEstimateProfit);
 
@@ -300,8 +299,9 @@
           renderDiffChart(data.result.blocks);
         }
       });
+     
 
-      // get conceal market data
+      // get market data
       $.getJSON("https://api.coingecko.com/api/v3/coins/fango?sparkline=true", function (data) {
         USDperCCX = data.market_data.current_price.usd;
         $("#CCXToUSD").html("$ " + localizeNumber(data.market_data.current_price.usd.toFixed(2)));
@@ -396,7 +396,7 @@
   };
 
   function renderLastBlock() {
-    $.getJSON("http://fandomgold.org:18180/getinfo", function (infoData) {
+    $.getJSON("http://104.236.0.16:18180/getinfo", function (infoData) {
       updateText('totalBanked', getReadableCoins2(infoData.full_deposit_amount, 0));
 
       $.ajax({

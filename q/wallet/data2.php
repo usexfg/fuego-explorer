@@ -8,7 +8,7 @@ $bitstampeur = fetch_bitstamp("https://www.bitstamp.net/api/v2/ticker/btceur/");
 $btc = number_format($bitstamp['last'],2,".",",");
 $btceur = number_format($bitstampeur['last'],2,".",",");
 
-$coingecko = fetch_coingecko("https://api.coingecko.com/api/v3/coins/conceal");
+$coingecko = fetch_coingecko("https://api.coingecko.com/api/v3/coins/fango");
 $ccxusd = number_format($coingecko['market_data']['current_price']['usd'],2,".",",");
 $marketcap = number_format($coingecko['market_data']['market_cap']['usd'],2,".",",");
 $totalvolume = number_format($coingecko['market_data']['total_volume']['usd'],2,".",",");
