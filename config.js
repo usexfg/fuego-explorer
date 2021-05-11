@@ -4,4 +4,4 @@ var donationAddress = "";
 var blockTargetInterval = 480;
 var coinUnits = 10000000;
 var symbol = 'XFG';
-var refreshDelay = 5000;
+var refreshDelay= 48000;

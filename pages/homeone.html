@@ -58,7 +58,7 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading">
 		  
-			<h2 style="margin-top:10px;"class="panel-title"><i class="fa fa-bar-chart" aria-hidden="true"></i> Charts
+			<h2 style="margin-top:10px;color:ivory"class="panel-title"><i class="fa fa-bar-chart" aria-hidden="true"></i> Transactions
 		  
 			<span class="text-default" data-toggle="tooltip" data-placement="right" data-original-title="Block size and transactions count based on recent block list below.  Load more blocks to enlarge chart range."><i class="fa fa-question-circle"></i></span>
 			</h3>
@@ -82,7 +82,7 @@
   </div>
   <div id="tradiv" class="panel-body"style="display:none;">
 		
-		<div class="row"style="box-shadow: 0px -45px 2000px 21px #29d7ff;margin-bottom: 33px;border-radius: 45px;">
+		<div class="row"style="box-shadow: 0px -45px 2000px 21px #29d7ff;margin-bottom: 33px;border-radius: 45px;color:darkorange;">
 		  <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
 			<div class="panel panel-default tab-panel"style="margin-bottom: 0px;border-radius: 45px;">
 			  <div class="panel-body">
@@ -133,11 +133,11 @@
 			<table class="table table-hover" id="mem_pool_table">
 				<thead>
 				<tr>
-					<th width="30%"><i class="fa fa-clock-o"></i> Date &amp; time</th>
-					<th width="10%"><i class="fa fa-money"></i> Amount</th>
-					<th width="10%"><i class="fa fa-tag"></i> Fee</th>
-					<th width="10%"><i class="fa fa-archive"></i> Size</th>
-					<th width="40%"><i class="fa fa-paw"></i> Hash</th>
+					<th style="background-color: #b6e4ec;" width="30%"><i class="fa fa-clock-o"></i> Date &amp; time</th>
+					<th style="background-color: #b6e4ec;" width="10%"><i class="fa fa-money"></i> Amount</th>
+					<th style="background-color: #b6e4ec;" width="10%"><i class="fa fa-tag"></i> Fee</th>
+					<th style="background-color: #b6e4ec;" width="10%"><i class="fa fa-archive"></i> Size</th>
+					<th style="background-color: #b6e4ec;" width="40%"><i class="fa fa-paw"></i> Hash</th>
 				</tr>
 				</thead>
 				<tbody id="mem_pool_rows">
@@ -150,11 +150,9 @@
 
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-	<h3 class="panel-title"><i class="fa fa-chain fa-rotate-270 fa-fw" aria-hidden="true"></i> Recent blocks</h3>
-  </div>
   <div class="panel-body">
-	<div class="row">
+<div class="row" style="background-color: dimgray;border-radius: 16px;border: 1px solid black;margin-top: 20px;">
+<h4 class="panel-title" style="padding-right: 95px;margin-left: 20px;margin-top: 7px;color: gold;"><i class="fa fa-chain fa-rotate-270 fa-fw" aria-hidden="true"></i> Recent blocks</h4>
 		<div class="col-sm-8 col-md-6 col-lg-5">
 			<div class="input-group">
 				<a id="prev-page" href="#" class="btn btn-default input-group-addon"><i class="fa fa-arrow-left" aria-hidden="true"></i> Older</a>
@@ -623,7 +621,7 @@ function displayDiffChart() {
 				type: "bar",
                                 backgroundColor: "#b0e9ff4d",
                                 borderColor: "#00bfff",
-           			borderWidth: 3,
+           			borderWidth: 2,
 				pointColor : "#00bfff",
 				pointBorderColor : "#00bfff",
 				pointHighlightFill: "#00bfff",
