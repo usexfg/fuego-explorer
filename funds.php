@@ -4,7 +4,7 @@
   
   if (hash('ripemd160', $_POST['uploadKey']) == "01855f7552595d8ab056318471ac5e0a0421a906")
   {
-	
+
 	if (!unlink('funds.dat.old')) {
       echo json_encode(array(SUCCESS => false, REASON => 'Failed to delete the old funds.dat!'));
     } else {

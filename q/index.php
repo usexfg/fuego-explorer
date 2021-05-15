@@ -1,4 +1,5 @@
 <?php
+
 require '../config.php';
 $url 	= $node . '/json_rpc';
 $geturl =  $node . '/getinfo';
