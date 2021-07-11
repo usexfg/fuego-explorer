@@ -396,7 +396,7 @@
   };
 
   function renderLastBlock() {
-    $.getJSON("http://104.236.0.16:18180/getinfo", function (infoData) {
+    $.getJSON(api + '/getinfo', function (infoData) {
       updateText('totalBanked', getReadableCoins2(infoData.full_deposit_amount, 0));
 
       $.ajax({
