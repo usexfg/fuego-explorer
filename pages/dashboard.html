@@ -307,7 +307,8 @@
         $("#CCXToUSD").html("$ " + localizeNumber(data.market_data.current_price.usd.toFixed(2)));
         $("#CCXToBTC").html(data.market_data.current_price.btc.toFixed(8));
         $("#dailyVolume").html("$ " + localizeNumber(data.market_data.total_volume.usd.toFixed(0)));
-
+        $("#marketcap").html("# " + data.market_cap_rank);
+                                   
         if (marketPriceAreaChart) {
           marketPriceAreaChart.destroy();
         }
