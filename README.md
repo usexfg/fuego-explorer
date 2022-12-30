@@ -4,7 +4,7 @@ Runs on data from your fango dæmon. Should be ready to go for use on web server
 
 Start your Fango dæmon using command:
 
-<sup>```./fangod --restricted-rpc --enable-cors=* --enable-blockchain-indexes --rpc-bind-ip=0.0.0.0 --rpc-bind-port=18180```</sup>
+<sup>```./fangod --enable-cors=* -i --rpc-bind-ip=0.0.0.0 --rpc-bind-port=18180```</sup>
 
 Change config.js to point to your dæmon. Files go to your web root folder (/var/www/html)
 
