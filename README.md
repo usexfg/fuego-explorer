@@ -1,4 +1,4 @@
-# Fango Explorer
+# Fuego Explorer
 
 Runs on data from your fuego dæmon. Should be ready to go for use on web servers.
 
