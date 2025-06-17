@@ -14,7 +14,7 @@
           <div class="dash-content">
             <label class="tx-primary" tkey="totalBanked">Total Banked</label>
             <label class="tx-primary" id="depositCoinsPct"></label><BR>
-            <label class="tx-secondary" tkey="totalBankedInfo">Total funds locked in deposits (coming soon)</label>
+            <label class="tx-secondary" tkey="totalBankedInfo">Total funds locked in deposits</label>
             <h2><span id="depositCoins">N/A</span></h2>
           </div><!-- dash-content -->
         </div><!-- col-4 -->
@@ -22,14 +22,14 @@
           <div class="dash-content dash-small-info">
             <label class="tx-primary" tkey="circulatingSuppy">Circulating Supply</label>
             <label class="tx-primary" id="emissionPercentPct""></label><BR>
-            <label class=" tx-secondary" tkey="circulatingSuppyInfo">The total number of coins not banked.</label>
+            <label class=" tx-secondary" tkey="circulatingSuppyInfo">The total number of XFG not banked.</label>
             <h2><span id="emissionPercent">N/A</span></h2>
           </div><!-- dash-content -->
         </div><!-- col-4 -->
         <div class="col-lg-4">
           <div class="dash-content dash-small-info">
             <label class="tx-primary" tkey="totalSupply">Total Supply</label>
-            <label class="tx-primary" id="totalCoinsPct">(94%)</label><BR>
+            <label class="tx-primary" id="totalCoinsPct">(%)</label><BR>
             <label class="tx-secondary" tkey="totalSupplyInfo">The total supply minted to date.</label>
             <h2><span id="totalCoins">N/A</span></h2>
           </div><!-- dash-content -->
@@ -302,7 +302,7 @@
      
 
       // get market data
-      $.getJSON("https://api.coingecko.com/api/v3/coins/fango?sparkline=true", function (data) {
+      $.getJSON("https://graphsv2.coinpaprika.com/currency/data/xfg-fango/30d/?quote=usd", function (data) {
         USDperCCX = data.market_data.current_price.usd;
         $("#CCXToUSD").html("$ " + localizeNumber(data.market_data.current_price.usd.toFixed(2)));
         $("#CCXToBTC").html(data.market_data.current_price.btc.toFixed(8));
