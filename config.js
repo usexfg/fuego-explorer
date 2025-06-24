@@ -1,4 +1,4 @@
-var api = 'http://104.236.0.16:18180';
+var api = 'http://127.0.0.1:18180';
 var poolListUrl = '';
 var donationAddress = "";
 var blockTargetInterval = 480;
