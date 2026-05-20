@@ -8,29 +8,32 @@
       </div>
     </div><!-- dash-headline-two -->
 
-    <div class="card card-dash-one mg-t-20">
+<!-- do a refactoring of supply to account for burned XFG/reborn XFG and redo this section-->
+<!--  MAXsupply= 8M8, newTotalsupply = totalsupply minus burned, Circulatingsupply =   -->
+
+    <div class="card card-dash-one mg-t-20"> 
       <div class="row no-gutters">
         <div class="col-lg-4">
           <div class="dash-content">
-            <label class="tx-primary" tkey="totalBanked">Total Banked</label>
+            <label class="tx-primary" tkey="totalBanked">Total in Bonds</label>
             <label class="tx-primary" id="depositCoinsPct"></label><BR>
-            <label class="tx-secondary" tkey="totalBankedInfo">Total funds locked in deposits</label>
+            <label class="tx-secondary" tkey="totalBankedInfo">Amount of XFG term-locked into COLD Banking Suite</label>
             <h2><span id="depositCoins">N/A</span></h2>
           </div><!-- dash-content -->
-        </div><!-- col-4 -->
+        </div><!-- col-4         add section for "Total Burned" here? or keep separate on attest page   -->                  
         <div class="col-lg-4">
           <div class="dash-content dash-small-info">
             <label class="tx-primary" tkey="circulatingSuppy">Circulating Supply</label>
-            <label class="tx-primary" id="emissionPercentPct""></label><BR>
-            <label class=" tx-secondary" tkey="circulatingSuppyInfo">The total number of XFG not banked.</label>
+            <label class="tx-primary" id="emissionPercentPct"></label><BR>
+            <label class=" tx-secondary" tkey="circulatingSuppyInfo">Total number of XFG not bonded.</label>
             <h2><span id="emissionPercent">N/A</span></h2>
           </div><!-- dash-content -->
         </div><!-- col-4 -->
         <div class="col-lg-4">
           <div class="dash-content dash-small-info">
-            <label class="tx-primary" tkey="totalSupply">Total Supply</label>
-            <label class="tx-primary" id="totalCoinsPct">(%)</label><BR>
-            <label class="tx-secondary" tkey="totalSupplyInfo">The total supply minted to date.</label>
+            <label class="tx-primary" tkey="totalSupply">Total Supply</label> <!-- make & use a new constructor called actualTotalSupply that excludes burned XFG -->
+            <label class="tx-primary" id="totalCoinsPct">(94%)</label><BR>
+            <label class="tx-secondary" tkey="totalSupplyInfo">Total amount of XFG on chain.</label>
             <h2><span id="totalCoins">N/A</span></h2>
           </div><!-- dash-content -->
         </div><!-- col-4 -->
@@ -47,7 +50,7 @@
       <div class="dasboard-box">
         <h1 class="tx-white tx-56 tx-lato tx-bold"><span id="networkDifficulty">N/A</span></h1>
         <h6 class="tx-15 tx-primary tx-bold mg-b-20" tkey="netDifficulty">Network Difficulty</h6>
-        <p tkey="netDiffInfo">Chart shows network difficulty for the last 30 blocks.</p>
+        <p tkey="netDiffInfo">Network difficulty for the last 30 blocks.</p>
         <a style="background-color: floralwhite;border: 4px outset gold;" data-page="explorer.html" href="#explorer" class="statement-link" tkey="netExplorer">Explore Ledger<i
            class="fa fa-angle-right mg-l-5"></i></a>
         <p class="tx-12"></p>
@@ -93,14 +96,16 @@
         <h4 class="tx-white mg-b-3" tkey="miningInfo">Mining info</h4>
       </div>
     </div><!-- d-flex -->
+<!--              maybe include/integrate the Burn/Born section here -->
+<!--              like one for total burned_XFG, one for total XFG_reborn-->
 
     <div class="card card-dash-one mg-t-20">
       <div class="row no-gutters">
         <div class="col-lg-4">
           <div class="dash-content">
             <label class="tx-primary" tkey="currentReward">Current block reward</label>
-            <h2><span id="currentReward">N/A</span></h2>
-          </div><!-- dash-content -->
+            <h2><span id="currentReward">N/A</span></h2> 
+          </div><!-- dash-content --> <!-- do a little sUPscript above of original blk_reward amount & green '+' w/ amount of reborn_XFG -->
         </div><!-- col-4 -->
         <div class="col-lg-4">
           <div class="dash-content dash-small-info">
@@ -132,7 +137,7 @@
           <div class="dash-content dash-small-info dash-market">
             <div class="info-text">
               <label class="tx-primary" tkey="mktCCXToUSD">XFG to USD</label>
-              <h2><span id="CCXToUSD">N/A</h2>
+              <h2><span id="XFGToUSD">N/A</h2>
             </div>
             <div class="icon icon-info">
               <span class="fa fa-sm fa-dollar"></span>
@@ -143,7 +148,7 @@
           <div class="dash-content dash-small-info dash-market">
             <div class="info-text">
               <label class="tx-primary" tkey="mktCCXToBTC">XFG to BTC</label>
-              <h2><span id="CCXToBTC">N/A</span></h2>
+              <h2><span id="XFGToBTC">N/A</span></h2>
             </div>
             <div class="icon icon-info">
               <span class="fa fa-sm fa-btc"></span>
@@ -219,7 +224,7 @@
 
 <script>
   var block = null;
-  var USDperCCX = null;
+  var USDperXFG = null;
   var diffAreaChart = null;
   var marketPriceAreaChart = null;
 
@@ -268,8 +273,8 @@
 
   // Get price in specified currency
   function getCurrencyPriceText(coinAmmount) {
-    if (USDperCCX) {
-      var price = USDperCCX * coinAmmount;
+    if (USDperXFG) {
+      var price = USDperXFG * coinAmmount;
       return ("($ " + price.toFixed(2) + ")");
     }
   }
@@ -301,84 +306,92 @@
       });
      
 
-      // get market data
-      $.getJSON("https://graphsv2.coinpaprika.com/currency/data/xfg-fango/30d/?quote=usd", function (data) {
-        USDperCCX = data.market_data.current_price.usd;
-        $("#CCXToUSD").html("$ " + localizeNumber(data.market_data.current_price.usd.toFixed(2)));
-        $("#CCXToBTC").html(data.market_data.current_price.btc.toFixed(8));
-        $("#dailyVolume").html("$ " + localizeNumber(data.market_data.total_volume.usd.toFixed(0)));
-        $("#marketcap").html("# " + data.market_cap_rank);
-                                   
+      // get market data via Coinpaprika graph service (30-day window)
+      $.getJSON("https://graphsv2.coinpaprika.com/currency/data/xfg-fango/30d/?quote=usd", function (resp) {
+        if (!Array.isArray(resp) || !resp.length) return; // safety guard
+
+        const metrics          = resp[0];
+        const priceSeries      = metrics.price;   // [[timestamp, usd], ...]
+        const btcSeries        = metrics.btc;     // [[timestamp, btc], ...]
+        const volumeSeries     = metrics.volume;  // [[timestamp, usd], ...]
+
+        const latestPriceUsd   = priceSeries[priceSeries.length - 1][1];
+        const latestPriceBtc   = btcSeries[btcSeries.length - 1][1];
+        const latestVolumeUsd  = volumeSeries[volumeSeries.length - 1][1];
+
+        // expose to profit-calculator
+        USDperXFG = latestPriceUsd;
+
+        $("#XFGToUSD").html("$ " + localizeNumber(latestPriceUsd.toFixed(2)));
+        $("#XFGToBTC").html(latestPriceBtc.toFixed(8));
+        $("#dailyVolume").html("$ " + localizeNumber(latestVolumeUsd.toFixed(0)));
+
+        // Market-cap = price × total supply (8 000 008.8)
+        const totalSupply  = 8_000_008.8;
+        const marketCapUsd = latestPriceUsd * totalSupply;
+        $("#marketcap").html("$ " + localizeNumber(marketCapUsd.toFixed(0)));
+        $("#marketcapRank").html("");
+
+        // ---------------- Price chart (30-day) ----------------
         if (marketPriceAreaChart) {
           marketPriceAreaChart.destroy();
         }
-    
-        var timeLabels = [];
-        var dataLength = data.market_data.sparkline_7d.price.length;
-        var durationAsMS = moment.duration(7 / dataLength, 'd').asMilliseconds();
 
-        for (i = dataLength - 1; i >= 0; i--) {
-          timeLabels.push(moment().subtract(durationAsMS * (i + 1), 'ms').format('YYYY-MM-DD'));
-        }
+        const timeLabels = priceSeries.map(pt => moment(pt[0]).format('YYYY-MM-DD'));
+        const priceData  = priceSeries.map(pt => pt[1]);
 
         marketPriceAreaChart = new Chart(document.getElementById('chartMarketPriceCanvas'), {
           type: 'line',
           data: {
             labels: timeLabels,
             datasets: [{
-              data: smooth(data.market_data.sparkline_7d.price, 3),
-              backgroundColor: 'rgba(255,165,0,0.2)',
+              data: smooth(priceData, 3),
+              backgroundColor: 'rgba(255,165,0,0.15)',
               fill: true,
-              borderWidth: 0,
+              borderWidth: 2,
               pointRadius: 1,
+              pointBorderColor: '#FFD700',
+              pointBackgroundColor: '#FFD700',
               borderColor: '#FFD700'
             }]
           },
           options: {
-            animation: false,
+            animation: {
+              duration: 1000,
+              easing: 'easeOutQuart'
+            },
             responsive: true,
             maintainAspectRatio: false,
-            legend: {
-              display: false,
-              labels: {
-                display: false
-              }
-            },
+            legend: { display: false },
             scales: {
               yAxes: [{
                 ticks: {
                   maxTicksLimit: 5,
                   fontSize: 10,
-                  callback: function (value, index, values) {
-                    return '$' + value.toFixed(2);
-                  }
+                  callback: function (v) { return '$' + v.toFixed(2); }
                 },
-                gridLines: {
-                  color: 'rgba(255,255,255,.08)'
-                }
+                gridLines: { color: 'rgba(255,255,255,.08)' }
               }],
               xAxes: [{
                 ticks: {
                   autoSkip: true,
-                  maxTicksLimit: 7,
+                  maxTicksLimit: 10,
                   maxRotation: 0,
                   minRotation: 0
                 },
-                gridLines: {
-                  color: 'rgba(255, 255, 255, .08)'
-                },
+                gridLines: { color: 'rgba(255,255,255,.08)' }
               }]
             },
-            hover: {
-              mode: 'nearest',
-              intersect: true
-            },
+            hover: { mode: 'nearest', intersect: true },
             tooltips: {
               mode: 'index',
               intersect: false,
+              backgroundColor: 'rgba(33,37,41,0.95)',
+              titleFontFamily: 'Orbitron',
+              bodyFontFamily: 'Lato',
               callbacks: {
-                label: function (tooltipItem) {
-                  return "$ " + Number(tooltipItem.yLabel).toFixed(4);
+                label: function (tooltipItem, data) {
+                  return '$ ' + Number(tooltipItem.yLabel).toFixed(4);
                 }
               }
             }
@@ -467,11 +480,15 @@
           data: smooth(diffData, 2),
           backgroundColor: 'rgba(255,165,0,0.2)',
           fill: true,
-          borderWidth: 0,
+          borderWidth: 2,
           borderColor: '#FFD700'
         }]
       },
       options: {
+        animation: {
+          duration: 800,
+          easing: 'easeOutQuart'
+        },
         maintainAspectRatio: false,
         legend: {
           display: false,
@@ -499,6 +516,16 @@
               color: 'rgba(255,255,255,.08)'
             }
           }]
+        },
+        tooltips: {
+          backgroundColor: 'rgba(33,37,41,0.95)',
+          titleFontFamily: 'Orbitron',
+          bodyFontFamily: 'Lato',
+          callbacks: {
+            label: function (tooltipItem) {
+              return 'Difficulty: ' + getReadableDifficultyString(tooltipItem.yLabel, 0);
+            }
+          }
         }
       }
     });

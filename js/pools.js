@@ -86,7 +86,10 @@ var displayChart = function displayChart() {
   if (poolsChart === null) {
     var options = {
       animation: {
-        duration: 0
+        duration: 800,
+        easing: 'easeOutQuart',
+        animateRotate: true,
+        animateScale: true
       },
       title: {
         display: true,
@@ -109,6 +112,9 @@ var displayChart = function displayChart() {
       tooltips: {
         enabled: true,
         mode: 'single',
+        backgroundColor: 'rgba(33,37,41,0.95)',
+        titleFontFamily: 'Orbitron',
+        bodyFontFamily: 'Lato',
         callbacks: {
           title: function (tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
           label: function (tooltipItem, data) {

@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" style="color-scheme:dark">
 
-<head lang="en">
+<head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
-  <link rel="shortcut icon" href="favicon.ico">
-  <link rel="icon" type="image/icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#212529">
+  <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="favicon.ico">
+  <link rel="icon" type="image/icon" sizes="16x16 32x32 48x48" href="favicon.ico">
   <title>XFG Explorer</title>
+  <link rel="preconnect" href="https://graphsv2.coinpaprika.com">
   <!-- vendor css -->
   <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet">
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="lib/Ionicons/css/ionicons.css" rel="stylesheet">
-  <link href="lib/chartist/css/chartist.css" rel="stylesheet">
   <link href="lib/select2/css/select2.min.css" rel="stylesheet">
   <link href="lib/datatables/css/jquery.dataTables.css" rel="stylesheet">
 
@@ -28,12 +29,9 @@
   <script src="lib/jquery.cookie/js/jquery.cookie.js"></script>
   <script src="lib/jquery.timeago/js/jquery.timeago.js"></script>
   <script src="lib/select2/js/select2.full.min.js"></script>
-  <script src="lib/echarts/js/echarts.min.js"></script>
   <script src="lib/moment/js/moment.js"></script>
   <script src="lib/chart.js/js/Chart.js"></script>
-  <script src="lib/chartist/js/chartist.js"></script>
   <script src="lib/datatables/js/jquery.dataTables.js"></script>
-  <script src="lib/jquery.sparkline.bower/js/jquery.sparkline.min.js"></script>
 
 
   <script src="js/loading-indicator.min.js"></script>
@@ -66,8 +64,8 @@
         <div class="search-box">
           <input type="text" id="txt_search" class="form-control" tplaceholder="searchHint"
             placeholder="Search by block height / hash, transaction hash, payment id">
-          <button id="btn_search" class="btn btn-primary">
-            <i class="fa fa-search"></i>
+          <button id="btn_search" class="btn btn-primary" aria-label="Search">
+            <i class="fa fa-search" aria-hidden="true"></i>
           </button>
         </div>
         <!-- language selector -->

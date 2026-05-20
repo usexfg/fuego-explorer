@@ -72,7 +72,7 @@
 </div>
 
 
-<div style="background-color:lemonchiffon;"class="panel panel-default">
+<div class="panel panel-default" id="txpoolSection">
 <input type="button" class="btn btn-default btn-xs pull-right" value="☰" onclick="tra()" style="border-radius: 0px;font-size:8px;">
   <div class="panel-heading"> 
 	<h3 style=""class="panel-title"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Transaction pool 
@@ -82,9 +82,9 @@
   </div>
   <div id="tradiv" class="panel-body"style="display:none;">
 		
-		<div class="row"style="box-shadow: 0px -45px 2000px 21px #29d7ff;margin-bottom: 33px;border-radius: 45px;color:darkorange;">
+		<div class="row" id="mempoolSummaryRow">
 		  <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-			<div class="panel panel-default tab-panel"style="margin-bottom: 0px;border-radius: 45px;">
+			<div class="panel panel-default tab-panel">
 			  <div class="panel-body">
 				
 				  <ul class="nav nav-pills nav-stacked">
@@ -94,19 +94,19 @@
 			  </div>
 			</div>
 		  </div>
-		  <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3"style="padding-left: 0;margin-inline-start: -53px;">
-			<div class="panel panel-default tab-panel"style="margin-bottom: 0px;border-radius: 45px;">
+		  <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+			<div class="panel panel-default tab-panel">
 			  <div class="panel-body">
 				
-				  <ul class="nav nav-pills nav-stacked" style="margin-left: -18px;">
+				  <ul class="nav nav-pills nav-stacked">
 					<li data-toggle="tooltip" data-placement="bottom" data-original-title="">Total Amount: <span id="mempool_amount"></span></li>
 				  </ul>
 				
 			  </div>
 			</div>
 		  </div>
-		  <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3"style="padding-right: 0;">
-			<div class="panel panel-default tab-panel"style="margin-bottom: 0px;border-radius: 45px;">
+		  <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+			<div class="panel panel-default tab-panel">
 			  <div class="panel-body">
 				
 				  <ul class="nav nav-pills nav-stacked">
@@ -117,7 +117,7 @@
 			</div>
 		  </div>
 		  <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-		    <div class="panel panel-default tab-panel"style="margin-bottom: 0px;border-radius: 45px;">
+		    <div class="panel panel-default tab-panel">
 		      <div class="panel-body">
 			    
 			      <ul class="nav nav-pills nav-stacked">
@@ -151,7 +151,7 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-<div class="row" style="background-color: dimgray;border-radius: 16px;border: 1px solid black;margin-top: 20px;">
+<div class="row" id="recentBlocksHeader">
 <h4 class="panel-title" style="padding-right: 95px;margin-left: 20px;margin-top: 7px;color: gold;"><i class="fa fa-chain fa-rotate-270 fa-fw" aria-hidden="true"></i> Recent blocks</h4>
 		<div class="col-sm-8 col-md-6 col-lg-5">
 			<div class="input-group">
@@ -647,6 +647,10 @@ function displayDiffChart() {
                     ]
 		};
 	var options = {
+			animation: {
+				duration: 800,
+				easing: 'easeOutQuart'
+			},
 			responsive: true,
 			maintainAspectRatio: false,
 			elements: {
@@ -658,7 +662,10 @@ function displayDiffChart() {
 				display: true
 			},
 			legend: {
-				display: true
+				display: true,
+				labels: {
+					fontColor: '#CCC'
+				}
 			},
 			scales: {
 			  yAxes: [
@@ -770,37 +777,21 @@ function displayDiffChart() {
 			},
 			tooltips: {
 				mode: 'index',
+				backgroundColor: 'rgba(33,37,41,0.95)',
+				titleFontFamily: 'Orbitron',
+				bodyFontFamily: 'Lato',
 				displayColors: true,
 				callbacks: {
 					title: function(tooltipItem, data) {
-					//	var height	= data.datasets[3].data[tooltipItem[0].index];
-						var time = new Date(data.labels[tooltipItem[0].index]).toLocaleString();
-					//	return 'Block: ' + height + ' - ' + time + '';
-						return time + '';
-					}, /*
-					label: function(tooltipItem, data) { 
-				//		var diff		= data.datasets[0].data[tooltipItem.index];
-						var txcount	= data.datasets[1].data[tooltipItem.index];
-						var size		= data.datasets[2].data[tooltipItem.index];
-						
-						var diff_swatch_color = data.datasets[0].borderColor;
-						
-						console.log(diff_swatch_color);
-						
-				//		var diff_swatch = '<span style="color="'+ diff_swatch_color +'">&bullet;</span>';
-						
-						var multistringText = [];
-  
-				//		var str1 = diff_swatch + 'Difficulty: ' + diff + '';
-						var str2 = 'Size: ' + size + '';
-						var str3 = 'Transactions: ' + txcount + '';
-  
-				//		multistringText.push(str1);
-						multistringText.push(str2);
-						multistringText.push(str3);
-  
-						return multistringText;
-					} */
+						return new Date(data.labels[tooltipItem[0].index]).toLocaleString();
+					},
+					label: function(tooltipItem, data) {
+						var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+						var value = tooltipItem.yLabel;
+						if (datasetLabel === 'Size') return datasetLabel + ': ' + formatBytes(parseInt(value));
+						if (datasetLabel === 'Transactions') return datasetLabel + ': ' + localizeNumber(value);
+						return '';
+					}
 				}
 			  }
 		}; 
@@ -884,4 +875,3 @@ function formatBytes(bytes, precision) {
     }
 };
 </script>
-<script src="../js/Chart.bundle.min.js"></script>

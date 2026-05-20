@@ -1,7 +1,48 @@
 body {
-  background-color: midnightblue; }
+  background-color: midnightblue;
+  font-family: "Lato", "Helvetica Neue", Arial, sans-serif; }
 
-/******************** HEADER *********************/
+:root {
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid #1b84e7;
+  outline-offset: 2px;
+}
+
+.table th, .table td {
+  font-variant-numeric: tabular-nums;
+}
+
+a, button, .btn, .nav-link, .hot_link {
+  touch-action: manipulation;
+}
+
+footer a, .slim-footer a {
+  color: #1b84e7;
+}
+
+footer a:hover, .slim-footer a:hover {
+  color: gold;
+}
 .slim-header {
   background-color: #000000;
   border-bottom-color: gold; }
@@ -1079,3 +1120,93 @@ hr {
 .skin-mode-item a.skin-light-mode,
 .skin-mode-item a.skin-dark-mode {
   border: 0; }
+
+/******************** EXPLORER CUSTOM ********************/
+
+.card-dash-one, .card, .panel {
+  transition: border-color 0.2s ease;
+}
+
+.card-dash-one:hover, .card:hover {
+  border-color: #495057;
+}
+
+.dash-content h2 {
+  transition: color 0.3s ease;
+}
+
+.nav-link, .btn {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+#stats_updated i {
+  animation: boltPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes boltPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.slim-header {
+  box-shadow: 0 1px 3px rgba(255, 215, 0, 0.1);
+}
+
+.slim-logo a {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.slim-logo a:hover {
+  color: gold;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+canvas {
+  transition: opacity 0.4s ease;
+}
+
+#mempoolSummaryRow .tab-panel {
+  margin-bottom: 0;
+}
+
+#recentBlocksHeader {
+  background-color: #262a2f;
+  border-radius: 8px;
+  border: 1px solid #343a40;
+  margin-top: 20px;
+}
+
+#txpoolSection .table thead th {
+  background-color: #1c2023;
+}
+
+.scrollup {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #1b84e7;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.scrollup:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #stats_updated i {
+    animation: none;
+  }
+}
