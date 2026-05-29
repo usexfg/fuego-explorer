@@ -1210,3 +1210,35 @@ canvas {
     animation: none;
   }
 }
+
+.network-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-decoration: none;
+  margin-right: 12px;
+}
+.network-badge.mainnet {
+  background: rgba(0, 255, 136, 0.12);
+  color: #00ff88;
+  border: 1px solid rgba(0, 255, 136, 0.25);
+}
+.network-badge.mainnet:hover {
+  background: rgba(0, 255, 136, 0.2);
+}
+.network-badge.testnet {
+  background: rgba(255, 153, 0, 0.12);
+  color: #ff9900;
+  border: 1px solid rgba(255, 153, 0, 0.25);
+}
+.network-badge.testnet:hover {
+  background: rgba(255, 153, 0, 0.2);
+}

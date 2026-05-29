@@ -5,26 +5,80 @@ body{background-image: url(https://i.imgur.com/fCE1UY2.jpg);background-repeat: n
 <div id='main'style="padding-top:0px;" class="container pd-t-30">
     <div class="card mg-t-20" style="background-color: #000140cc;" id="blockInfo">
 
-        <div class="card-header tx-medium bd-0 tx-white bg-primary-dark" style="border: none !important;"><h3><span>DIGM Audio Album Marketplace</span></h3></div>
+        <div class="card-header tx-medium bd-0 tx-white bg-primary-dark" style="border: none !important;"><h3><span>DIGM &mdash; Music Platform on Fuego</span></h3></div>
 <div class="card-body card-body-info">
-            <div class="container" style="color: cyan;">  
-<label style="font-family:Lato;"><span style="font-size:medium;color: aliceblue;">DIGM is a music revolution via platform (or hosting framework) integration with the Fango peer-to-peer network,
-whereby Elder Nodes will serve catalogued music to Fango GUI wallets using their remote XFG payment connections. Allowing for any independent artist to upload &amp; sell their own audio or music album(s) - and keep 100% of revenue earned.</span>
+            <div class="container" style="color: cyan;">
+<label style="font-family:Lato;">
 
-<p style="margin-top: 20px;color: aliceblue;">By default, we plan to offer Para Dio+ a P2P streaming rewards radio using singles submitted by artists from album(s) available for sale in DIGM marketplace. Both artist &amp; listener receive rewards in <a href="https://stellar.expert/explorer/public/asset/PARA-GCFWKV4KWYPBPQVQYLVL6N6VARBLVQS6POYEMLN7AGZB5UK4VIJX565U-1?filter=trustlines" target="_blank">PARA</a> for streaming radio airtime.</p>
+<p style="font-size:medium;color: aliceblue;">
+DIGM is the use-case layer built on Fuego L1 &mdash; a decentralized music marketplace
+where independent artists publish albums, sell directly for <b>XFG</b>, and keep 100% of revenue.
+DIGM drives swap volume across the Fuego network, which in turn feeds the CD fee pool.
+No L2, no L3, no Elderfiers required &mdash; clean L1 architecture.
+</p>
 
-<p style="color: aliceblue;">Prototype will be reserved for Desktop as we have discussed making hashpower to the Fango network be a simple requirement for freemium access, or possibly for track-specific plays/skips.
-Diverting special purpose hashpower provided by platform listeners would open up a number of economic possibilities.
-For example, any Fango blocks mined from this special purpose hashpower could serve as a ‘proof of listener’ and be used to pay DIGM artists an additional distribution % according to number of streams/plays during each 30 day cycle in either XFG or <a href="https://simpleledger.info/token/8261c44c396fb1120b699b10de708f37a72f8b0339752d4dba67e193dbf898eb">DIGM</a>.</p>
-<p style="margin-top: 33px;color: aliceblue;">Marketplace payment for albums will naturally be on-chain &amp; exclusive to XFG by using built-in (fango) public addresses (Elder Node service address) for each hosting node operated by the individual artist, service provider, or even a record label of artists*.</p>
+<h4 style="color: gold;margin-top: 20px;">How It Works</h4>
+<ul>
+  <li><b>Artist publishes album</b> &mdash; requires holding <b>DIGM</b> colored coin (on-chain, fixed 100K supply). 10 releases per coin.</li>
+  <li><b>Album pricing</b> &mdash; artist sets USD target; XFG amount adjusts via oracle.</li>
+  <li><b>Payment</b> &mdash; buyers pay in XFG directly to artist. Artist keeps 100%.</li>
+  <li><b>I2P P2P distribution</b> &mdash; every DIGM client is a seeder over I2P garlic-routed network. 256KB ChaCha20 chunks. OGG/Opus 96kbps for streaming, FLAC for album downloads. No central servers.</li>
+</ul>
 
-<p>Both DIGM &amp; PARA tokens are offered initially for the purpose of crowdfunding development of ParaDio+ and DIGM Audio Marketplace- however, as the platform becomes operational, DIGM tokens will be required each cycle in order to host/share/sell audio in the marketplace. By having <b>100,000 DIGM</b> (no decimals) as a maximum, there will always be a limited number of artists (or hosts) able to sell music on the platform at any given time.
- PARA tokens are limited to one (1) token per issuing platform, (1 of 2 available:<a href="https://https://stellar.expert/explorer/public/asset/PARA-GCFWKV4KWYPBPQVQYLVL6N6VARBLVQS6POYEMLN7AGZB5UK4VIJX565U-1?filter=trustlines"> Para-on-Stellar</a>) which are denominated in sub-decimal pico-PARA (10^12) or just "para", and will be used for streaming airtime rewards to both artist & listener. </p>
-<sup style="font-family:Roboto;">(*) DIGM hosting Elder Nodes would be able to function as an 'artist pool'
-(think mix between record label and mining pool) being able to host content for- and distribute streaming royalties to- a roster of different artists. </sup>
+<h4 style="color: gold;margin-top: 20px;">ParaDio+ Streaming Rewards</h4>
+<p style="color: aliceblue;">
+ParaDio+ is the P2P streaming rewards radio. Listeners earn <b>PARA</b> tokens (1 PARA per minute of verified listening).
+Artist and listener each get a share; if played via a curator's playlist, the curator skims 30% from each share.
+</p>
 
-<li> DIGM is available on <a href="https://memo.cash/token/8261c44c396fb1120b699b10de708f37a72f8b0339752d4dba67e193dbf898eb?balances">Memo.cash</a> and <a href="https://my.cctip.io/token/exchange?quote_symbol=DIGM">CCtip.io</a></li>
-<li> PARA is available on <a href="https://stellarterm.com/exchange/PARA-GCFWKV4KWYPBPQVQYLVL6N6VARBLVQS6POYEMLN7AGZB5UK4VIJX565U/XLM-native">Stellarterm DEX</a></li>
+<h4 style="color: gold;margin-top: 20px;">Album Staking &amp; Epoch Championships</h4>
+<p style="color: aliceblue;">
+Listeners stake earned PARA into album "like pools" to signal discovery and boost rankings.
+Early stakers earn a higher time-weighted multiplier. Albums compete per epoch (~5 days / 900 blocks,
+aligned with the Fuego swap-fee epoch).
+</p>
+<p style="color: aliceblue;">
+When an album hits <b>#1</b> at epoch close:</p>
+<ul>
+  <li><b>PARA drains</b> &mdash; raw PARA from pool sent to the artist</li>
+  <li><b>Transmutation</b> &mdash; each staker's PARA converts to <b>VOX</b> (time-weighted)</li>
+  <li><b>nfVOX</b> &mdash; permanent one-per-#1-album trophy awarded to artist</li>
+  <li><b>TOP</b> &mdash; singleton championship token, held until dethroned</li>
+</ul>
+
+<h4 style="color: gold;margin-top: 20px;">In-App Tokens</h4>
+<ul>
+  <li><b>PARA</b> &mdash; earned by listening. Staked on albums. Fuel for the economy.</li>
+  <li><b>VOX</b> &mdash; transmuted from PARA when your staked album hits #1. Status, cosmetics, song requests (burn VOX), CURA minting.</li>
+  <li><b>CURA</b> &mdash; minted by burning VOX. Grants curator rights: public playlists, editorial power.</li>
+  <li><b>nfVOX</b> &mdash; one per #1 album. Permanent proof of a hit.</li>
+  <li><b>TOP</b> &mdash; singleton. Held by the artist of the current #1 album. Only 1 exists.</li>
+</ul>
+
+<h4 style="color: gold;margin-top: 20px;">Architecture</h4>
+<ul>
+  <li><b>DIGM colored coin</b> &mdash; on-chain on Fuego L1. Controls publishing access.</li>
+  <li><b>In-app tokens (PARA/VOX/CURA/nfVOX/TOP)</b> &mdash; tracked off-chain, merkle-anchored to Fuego tx_extra each epoch. Auditable, verifiable.</li>
+  <li><b>Mobile-first full node</b> &mdash; ships with full Fuego node + I2P router. iOS (Swift), Android (Kotlin), Desktop (Tauri). Shared Rust core (libfuego).</li>
+  <li><b>Every listener is a seeder</b> &mdash; bought albums auto-seed. PARA-staked albums are pinned. Popularity = availability.</li>
+</ul>
+
+<h4 style="color: gold;margin-top: 20px;">No Elderfiers / No L2</h4>
+<p style="color: aliceblue;">
+The L2/L3/Elderfier path was shelved. Fuego focuses on XFG + CD + atomic swaps + hidden amounts.
+DIGM becomes the swap volume driver: music purchases in XFG → drive swap fees → feed CD yield.
+Two independent flywheels sharing XFG as their medium.
+</p>
+
+<p style="margin-top: 25px;color: aliceblue;">
+<b>Resources:</b>
+</p>
+<ul>
+  <li><a href="https://memo.cash/token/8261c44c396fb1120b699b10de708f37a72f8b0339752d4dba67e193dbf898eb?balances" target="_blank" style="color:cyan;">DIGM on Memo.cash</a></li>
+  <li><a href="https://my.cctip.io/token/exchange?quote_symbol=DIGM" target="_blank" style="color:cyan;">DIGM on CCTip.io</a></li>
+  <li><a href="https://stellarterm.com/exchange/PARA-GCFWKV4KWYPBPQVQYLVL6N6VARBLVQS6POYEMLN7AGZB5UK4VIJX565U/XLM-native" target="_blank" style="color:cyan;">PARA on Stellarterm</a></li>
+</ul>
+
 </label>
 	  </div>
         </div>

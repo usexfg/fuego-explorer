@@ -1,211 +1,69 @@
-<div class="card mg-t-20" id="nodeInfo">
+<div class="card mg-t-20" id="protocolInfo">
   <div class="card-header tx-medium bd-0 tx-white bg-primary-dark">
-    <h2>
-      <i class="fa fa-ra" aria-hidden="true"></i>Elder Nodes <span></span>
-      <button class="btn btn-primary-outline" type="button" id="refreshNodes">
-        <span class="btnIcon fa fa-search"></span><span tkey="refreshNodes">Refresh list</span>
-      </button>
-    </h2>
+    <h2><i class="fa fa-university" aria-hidden="true"></i> HⲶ∆T + Yield Rates</h2>
   </div>
-    <div class="card-body card-body-info">
-      <li style="margin: 10px 10px;">
-        <a href="http://fandomgold.org:18180/getinfo" colspan="9" class="dataTables" valign="top" style="margin-bottom: 20px;margin-top: 20px;">fandomgold.org:18180</a>
-      </li>
-      <li style="margin: 10px 10px;">
-        <a href="http://fango.money:18180/getinfo" colspan="9" class="dataTables" valign="top" style="margin-bottom: 20px;margin-top: 20px;">fango.money:18180</a>
-      </li>
-      <li style="margin: 10px 10px;">
-        <a href="http://82.223.203.210:18180/getinfo" colspan="9" class="dataTables" valign="top" style="margin-bottom: 20px;margin-top: 20px;">82.223.203.210:18180</a>
-      </li>
-      <li style="margin: 10px 10px;">
-        <a href="http://fangotango.hopto.org:18180/getinfo" colspan="9" class="dataTables" valign="top" style="margin-bottom: 20px;margin-top: 20px;"> fangotango.hopto.org:18180</a>
-      </li>
-      <li style="margin: 10px 10px;">
-        <a href="http://cz.derogold4ever.online:18180/getinfo" colspan="9" class="dataTables" valign="top" style="margin-bottom: 20px;margin-top: 20px;">cz.derogold4ever.online:18180</a>
-      </li>
-       <li style="margin: 10px 10px;">
-        <a href="http://178.128.164.245:18180/getinfo" colspan="9" class="dataTables" valign="top" style="margin-bottom: 20px;margin-top: 20px;">178.128.164.245:18180</a>
-      </li>
-      <li style="margin-top: 10px;margin-left: 10px;margin: 10px 10px;">
-        <a href="http://xfg.fandroid.net:18180/getinfo" colspan="9" class="dataTables" valign="top" style="margin-bottom: 10px;padding-top: 20px;">xfg.fandroid.net:18180</a>
-      </li>
-      <li style="margin-top: 10px;margin-left: 10px;margin: 10px 10px;">
-        <a href="http://104.236.0.16:18180/getinfo" colspan="9" class="dataTables" valign="top" style="margin-bottom: 10px;padding-top: 20px;">104.236.0.16:18180</a>
-      </li>
-    </div>
-
-<div id="dlgCopiedToClipboard" class="modal fade">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content bd-0">
-      <div class="modal-header pd-x-20 dlgBgDarker">
-        <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Copied</h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
+  <div class="card-body card-body-info">
+    <div class="row">
+      <!-- Hearth AMM -->
+      <div class="col-md-6 mg-b-20">
+        <div class="card card-body bg-dark">
+          <h5 class="tx-white">Hearth AMM</h5>
+          <p class="tx-gray-500">Real-time XFG/HⲶ∆T LP pool</p>
+          <div id="amm_info">Loading...</div>
+        </div>
       </div>
-      <div class="modal-body pd-20">
-        <p class="mg-b-5">The connection URL was copied to clipboard
-        </p>
+      <!-- Commitment Deposits -->
+      <div class="col-md-6 mg-b-20">
+        <div class="card card-body bg-dark">
+          <h5 class="tx-white">Commitment Deposits (CDs)</h5>
+          <p class="tx-gray-500">SwapXFG fee yield & active deposits</p>
+          <div id="cd_info">Loading...</div>
+        </div>
       </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-primary-outline" data-dismiss="modal">Close</button>
+      <!-- HⲶ∆T Metrics -->
+      <div class="col-md-6 mg-b-20">
+        <div class="card card-body bg-dark">
+          <h5 class="tx-white">HⲶ∆T Metrics</h5>
+          <p class="tx-gray-500">Supply & Burn</p>
+          <div id="heat_metrics">Loading...</div>
+        </div>
+      </div>
+      <!-- Treasury -->
+      <div class="col-md-6 mg-b-20">
+        <div class="card card-body bg-dark">
+          <h5 class="tx-white">Protocol Treasury</h5>
+          <p class="tx-gray-500">Protocol reserve balance</p>
+          <div id="treasury_info">Loading...</div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  var correctHeight = 0;
-
   currentPage = {
     destroy: function () { },
     init: function () {
       loadTranslations();
+      this.update();
     },
-    update: function () { }
-  };
-
-  var nodeLoadingIndicator = $('#nodeInfo').loadingIndicator({
-    useImage: false,
-    showOnInit: false
-  }).data("loadingIndicator");
-
-  function getCountryName(countryCode) {
-    if (isoCountries.hasOwnProperty(countryCode)) {
-      return isoCountries[countryCode];
-    } else {
-      return countryCode;
-    }
-  }
-
-  function copyToClipboard(textToCopy) {
-    var $temp = $("<input>");
-    $("body").append($temp);
-    $temp
-      .val(textToCopy)
-      .select();
-    document.execCommand("copy");
-    $temp.remove();
-  }
-
-  function onConnectURLClick(e) {
-    copyToClipboard($(e.target).html());
-  }
-
-  function loadNodesDataToTable(initialLoad) {
-    $.getJSON("https://api.github.com/repos/ConcealNetwork/conceal-core/releases/latest", function (release) {
-      $.getJSON("https://explorer.conceal.network/pool/list?hasFeeAddr=false&isReachable=false&isSynced=True", function (data) {
-        var correctHeightList = {};
-        var correctHeightCnt = 0;
-        var tableData = [];
-        correctHeight = 0;
-
-        if (data.success) {
-          $(data.list).each(function (idx, obj) {
-            var nodeHeight = obj.blockchain ? obj.blockchain.height : 0;
-            var rowData = [];
-
-            if (obj.name) {
-              rowData.push(obj.location ? (obj.location.ip + ":" + (obj.nodePort || "16000")) : (obj.ip.substring(7) + ":" + (obj.nodePort || "16000")));
-              rowData.push(obj.name);
-              if ((obj.location) && (obj.location.data)) {
-                rowData.push(getCountryName(obj.location.data.country));
-              } else {
-                rowData.push("N/A");
-              }
-              rowData.push(moment(obj.status.startTime).fromNow());
-              rowData.push(nodeHeight);
-              rowData.push(obj.blockchain ? obj.blockchain.status : "n/a");
-              rowData.push(obj.status ? (obj.status.uptime || 0) : "0");
-              rowData.push(obj.os);
-              rowData.push(obj.blockchain ? obj.blockchain.version : "n/a");
-              tableData.push(rowData);
-
-              // increase the node height for the current node
-              correctHeightList[nodeHeight] = (correctHeightList[nodeHeight] || 0) + 1;
-            }
-          });
-
-          // find the correct height
-          for (var propertyName in correctHeightList) {
-            // you can get the value like this: myObject[propertyName]
-            if (correctHeightList[propertyName] > correctHeightCnt) {
-              correctHeightCnt = correctHeightList[propertyName];
-              correctHeight = propertyName;
-            }
-          }
-
-          $("#nodesNumber").html("(" + tableData.length + " online)");
-        }
-
-        if (initialLoad) {
-          $('#nodesTable').DataTable({
-            data: tableData,
-            responsive: true,
-            "columns": [
-              {
-                className: "ntNodeConnectURL",
-                render: function (data, type, row) {
-                  return '<a href="#" data-toggle="modal" data-target="#dlgCopiedToClipboard" onclick="onConnectURLClick(event)">' + data + '</a>';
-                }
-              }, {
-                className: "ntNodeName"
-              }, {
-                className: "ntNodeLocation"
-              }, {
-                className: "ntNodeStarted"
-              }, {
-                className: "ntNodeHeight"
-              }, {
-                className: "ntNodeStatus"
-              }, {
-                className: "ntNodeUptime",
-                render: function (data, type, row) {
-                  return data + "%";
-                }
-              }, {
-                className: "ntNodePlatform",
-                orderable: false
-              }, {
-                className: "ntNodeVersion",
-                orderable: false,
-                render: function (data, type, row) {
-                  if ((row[5] != "OK") || (row[4] < (correctHeight - 2))) {
-                    return data + '<span class="nodeStatus square-8 bg-danger mg-r-5 rounded-circle"></span>';
-                  } else if (row[8] != release.tag_name) {
-                    return data + '<span class="nodeStatus square-8 bg-warning mg-r-5 rounded-circle"></span>';
-                  } else {
-                    return data + '<span class="nodeStatus square-8 bg-success mg-r-5 rounded-circle"></span>';
-                  }
-                }
-              }
-            ]
-          });
-
-          // show refresh button
-          $("#refreshNodes").show();
-        } else {
-          $("#nodesTable")
-            .DataTable()
-            .clear();
-          $("#nodesTable")
-            .DataTable()
-            .rows
-            .add(tableData)
-            .draw();
-        }
-
-        nodeLoadingIndicator.hide();
+    update: function () {
+      // Hearth AMM
+      $.getJSON(xfgApi + '/node/amm/pool', function(d) {
+        $('#amm_info').html(`Pool: ${d.reserve_xfg/coinUnits} XFG / ${d.reserve_heat/1000000} HⲶ∆T<br>Spot Price: ${d.spot_price}`);
       });
-    });
-  }
-
-  $("#refreshNodes").click(function () {
-    nodeLoadingIndicator.show();
-    loadNodesDataToTable(false);
-  });
-
-  // do the intial load
-  nodeLoadingIndicator.show();
-  loadNodesDataToTable(true);
+      // CDs
+      $.getJSON(xfgApi + '/node/cd/yield?amount=1000&term=900', function(d) {
+        $('#cd_info').html(`Est. APY: ${d.apy}%<br>Total Deposits: ${d.total_deposits/coinUnits} HⲶ∆T`);
+      });
+      // HⲶ∆T Metrics
+      $.getJSON(xfgApi + '/node/heat/metrics', function(d) {
+        $('#heat_metrics').html(`Circulating: ${d.circulating/1000000} HⲶ∆T<br>Redemption Price: ${d.peg_price}`);
+      });
+      // Treasury
+      $.getJSON(xfgApi + '/node/treasury', function(d) {
+        $('#treasury_info').html(`Balance: ${d.balance/coinUnits} HⲶ∆T`);
+      });
+    }
+  };
 </script>

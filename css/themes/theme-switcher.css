@@ -1,0 +1,149 @@
+/* ============================================
+   Theme Switcher — Light / Dark
+   ============================================ */
+
+/* ── Default / No theme ── */
+body { --heading-font: 'Orbitron', sans-serif; --body-font: 'Lato', sans-serif; }
+
+/* ── Font application ── */
+body h1, body h2, body h3, body h4, body h5, body h6,
+body .slim-logo a,
+body .card-header h2, body .card-header h5,
+body .nav-link, body .btn, body legend, body label {
+  font-family: var(--heading-font);
+}
+body { font-family: var(--body-font); }
+
+/* ── Theme badge ── */
+.theme-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 4px; cursor: pointer;
+  font-size: 12px; font-weight: bold; text-transform: none;
+  margin-right: 8px; border: 1px solid; user-select: none;
+  white-space: nowrap;
+}
+.theme-badge:hover { opacity: 0.85; }
+
+/* ============================================
+   LIGHT — Sunset Boulevard (as-is)
+   ============================================ */
+body[data-theme="light"] {
+  background-color: #1a3643;
+  --heading-font: 'Playfair Display', serif;
+  --body-font: 'Lato', sans-serif;
+}
+body[data-theme="light"] .slim-header {
+  background-color: #122630; border-bottom-color: #e76f51;
+}
+body[data-theme="light"] .slim-navbar {
+  background-color: #152d3a; border-bottom-color: #e76f51;
+}
+body[data-theme="light"] .slim-footer {
+  background-color: #152d3a; border-top-color: #e76f51;
+}
+body[data-theme="light"] .card {
+  background-color: #264b5a; border-color: #e76f5133;
+}
+body[data-theme="light"] .card-header {
+  background-color: #e76f51; color: #ffffff;
+}
+body[data-theme="light"] .card-body {
+  background-color: #264b5a;
+}
+body[data-theme="light"] .bg-primary-dark {
+  background-color: #e76f51 !important;
+}
+body[data-theme="light"] .bg-dark {
+  background-color: #1d3d4a !important;
+}
+body[data-theme="light"] .hot_link { color: #e9c46a; }
+body[data-theme="light"] .hot_link:hover,
+body[data-theme="light"] .nav-item.active .hot_link { color: #f4a261; }
+body[data-theme="light"] .btn-primary {
+  background-color: #e76f51; border-color: #e76f51; color: #fff;
+}
+body[data-theme="light"] .btn-primary:hover {
+  background-color: #d45d40; border-color: #d45d40;
+}
+body[data-theme="light"] .tx-white { color: #e9c46a; }
+body[data-theme="light"] .tx-gray-500 { color: #7a9a9a; }
+body[data-theme="light"] footer a,
+body[data-theme="light"] .slim-footer a { color: #f4a261; }
+body[data-theme="light"] footer a:hover,
+body[data-theme="light"] .slim-footer a:hover { color: #e9c46a; }
+body[data-theme="light"] .network-badge {
+  background: #e76f51; color: #fff; border-color: #e76f51;
+}
+body[data-theme="light"] .network-badge.testnet {
+  background: #ff8800; color: #fff; border-color: #ff8800;
+}
+body[data-theme="light"] .theme-badge {
+  background: #e76f5120; color: #e9c46a; border-color: #e76f51;
+}
+body[data-theme="light"] *:focus-visible { outline-color: #f4a261; }
+body[data-theme="light"] .table { color: #e9c46a; }
+body[data-theme="light"] .search-box input {
+  background-color: #264b5a; border-color: #e76f5133; color: #fff;
+}
+
+/* ============================================
+   DARK — Hybrid Midnight Galaxy × Modern Minimalist
+   ============================================ */
+body[data-theme="dark"] {
+  background-color: #151522;
+  --heading-font: 'Cinzel', serif;
+  --body-font: 'Lato', sans-serif;
+}
+body[data-theme="dark"] .slim-header {
+  background-color: #0c0c15; border-bottom-color: #3a4058;
+}
+body[data-theme="dark"] .slim-navbar {
+  background-color: #10101c; border-bottom-color: #3a4058;
+}
+body[data-theme="dark"] .slim-footer {
+  background-color: #10101c; border-top-color: #3a4058;
+}
+body[data-theme="dark"] .card {
+  background-color: #1c1c2e; border-color: #2a3040;
+}
+body[data-theme="dark"] .card-header {
+  background-color: #3a4058; color: #dee4ec;
+}
+body[data-theme="dark"] .card-body {
+  background-color: #1c1c2e;
+}
+body[data-theme="dark"] .bg-primary-dark {
+  background-color: #3a4058 !important;
+}
+body[data-theme="dark"] .bg-dark {
+  background-color: #161626 !important;
+}
+body[data-theme="dark"] .hot_link { color: #8e9fb4; }
+body[data-theme="dark"] .hot_link:hover,
+body[data-theme="dark"] .nav-item.active .hot_link { color: #b8c8d8; }
+body[data-theme="dark"] .btn-primary {
+  background-color: #5e7a9c; border-color: #5e7a9c; color: #fff;
+}
+body[data-theme="dark"] .btn-primary:hover {
+  background-color: #4e6888; border-color: #4e6888;
+}
+body[data-theme="dark"] .tx-white { color: #dee4ec; }
+body[data-theme="dark"] .tx-gray-500 { color: #8190a0; }
+body[data-theme="dark"] footer a,
+body[data-theme="dark"] .slim-footer a { color: #8e9fb4; }
+body[data-theme="dark"] footer a:hover,
+body[data-theme="dark"] .slim-footer a:hover { color: #b8c8d8; }
+body[data-theme="dark"] .network-badge {
+  background: #3a4058; color: #dee4ec; border-color: #3a4058;
+}
+body[data-theme="dark"] .network-badge.testnet {
+  background: #ff8800; color: #fff; border-color: #ff8800;
+}
+body[data-theme="dark"] .theme-badge {
+  background: #3a405820; color: #8e9fb4; border-color: #3a4058;
+}
+body[data-theme="dark"] *:focus-visible { outline-color: #5e7a9c; }
+body[data-theme="dark"] .table { color: #dee4ec; }
+body[data-theme="dark"] .search-box input {
+  background-color: #1c1c2e; border-color: #2a3040; color: #dee4ec;
+}

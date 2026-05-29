@@ -77,6 +77,35 @@ $(document).ready(function () {
     $("#donations").show();
     $("#donationAddress").html(donationAddress);
   }
+
+  var $net = $('#network-toggle');
+  if (isTestnet) {
+    $net.addClass('testnet').find('span').text('Testnet');
+    $net.find('i').addClass('fa-flask');
+  } else {
+    $net.addClass('mainnet').find('span').text('Mainnet');
+    $net.find('i').addClass('fa-shield');
+  }
+  $net.click(function (e) {
+    e.preventDefault();
+    setParameter('testnet', isTestnet ? '0' : '1');
+  });
+
+  var $theme = $('#theme-toggle');
+  var $themeLabel = $('#theme-label');
+  function applyTheme(t) {
+    document.body.setAttribute('data-theme', t);
+    localStorage.setItem('xfgTheme', t);
+    $themeLabel.text(t === 'dark' ? 'Dark' : 'Light');
+  }
+  var saved = localStorage.getItem('xfgTheme');
+  if (!saved || /^[0-9]+$/.test(saved)) saved = 'dark';
+  applyTheme(saved);
+  $theme.click(function (e) {
+    e.preventDefault();
+    var next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+  });
 });
 
 function formatNumber(num) {

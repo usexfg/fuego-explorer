@@ -1,7 +1,8 @@
 {
     "dashboard": "Dashboard",
     "explorer": "Ledger",
-    "miningPools": "COLD",
+    "miningPools": "HⲶ∆T/CDs",
+    "heatYield": "Yield Rates",
     "txViewer": "Verify TXN",
     "api": "API",
     "bp": "Balance Proof",
@@ -25,7 +26,7 @@
     "transactions": "Transactions",
     "netHashrate": "Network Hashrate",
     "supplyAndBanking": "Banking",
-    "aboutConcealBanking": "About COLD Banking",
+    "aboutConcealBanking": "About HⲶ∆T &amp; CDs",
     "totalBankedInfo": "Total funds locked in deposits",
     "circulatingSuppy": "Circulating Supply",
     "circulatingSuppyInfo": "The total number of coins not banked.",

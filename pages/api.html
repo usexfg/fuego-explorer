@@ -1,45 +1,103 @@
 <div class="card mg-t-20" id="apiInfo">
   <div class="card-header tx-medium bd-0 tx-white bg-primary-dark">
-    <h2><i class="fa fa-code" aria-hidden="true"></i> API <small id="paymend_id" style="word-break: break-all;"></small>
+    <h2><i class="fa fa-code" aria-hidden="true"></i> Fuego API Gateway<small id="paymend_id" style="word-break: break-all;"></small>
     </h2>
   </div>
   <div class="card-body card-body-info">
     <div class="row">
       <div class="col-lg-12">
-        <h4><span tkey="apiTitle">Supported APIs</h4>
-        <ul>
-          <li><strong><a href="/q/hashrate"><span tkey="apiHashrateLabel">hashrate</span></a></strong> &ndash; <span
-              tkey="apiHashrateText">current estimated network hashrate</span></li>
-          <li><strong><a href="/q/height"><span tkey="apiHeightLabel">height</span></a></strong> &ndash; <span
-              tkey="apiHeightText">current height (incl. genesis block)</span></li>
-          <li><strong><a href="/q/reward"><span tkey="apiRewardLabel">reward</span></a></strong> &ndash; <span
-              tkey="apiRewardText">current block reward</span></li>
-          <li><strong><a href="/q/supply"><span tkey="apiSupplyLabel">supply</span></a></strong> &ndash; <span
-              tkey="apiSupplyText">circulating supply</span></li>
 
-<!-----          <li><strong><a href="/q/totalsupply"><span tkey="apiTotalSupplyLabel">totalsupply</span></a></strong> &ndash;
-            <span tkey="apiTotalSupplyText">current total supply of coins</span></li>
-          <li><strong><a href="/q/totalbanked"><span tkey="apiTotalBankedLabel">totalbanked</span></a></strong> &ndash;
-            <span tkey="apiTotalBankedText">current total banked coins</span></li>
-          <li><strong><a href="/q/maxsupply"><span tkey="apiMaxSupplyLabel">maxsupply</span></a></strong> &ndash; <span
-              tkey="apiMaxSupplyText">Max supply for the coin</span></li>
-          <li><strong><a href="/q/difficulty"><span tkey="apiDifficultyLabel">difficulty</span></a></strong> &ndash;
-            <span tkey="apiDifficultyText">current difficulty</span></li>
-          <li><strong><a href="/q/nodecount"><span tkey="apiNodeCountLabel">nodecount</span></a></strong> &ndash;
-            <span tkey="apiNodeCountText">current nodes count</span></li>
-          <li><strong><a href="/q/smartnodecount"><span tkey="apiSmartNodeCountLabel">smartnodecount</span></a></strong> &ndash;
-            <span tkey="apiSmartNodeCountText">current smart nodes count</span></li>
-          <li><strong><a href="/q/ethwccxsupply"><span tkey="apiETHwCCXSupplyLabel">ethwccxsupply</span></a></strong> &ndash;
-            <span tkey="apiSmartNodeCountText">ETH wCCX circulating supply</span></li>
-          <li><strong><a href="/q/ethwccxtotalsupply"><span tkey="apiETHwCCXTotalSupplyLabel">ethwccxtotalsupply</span></a></strong> &ndash;
-            <span tkey="apiSmartNodeCountText">ETH wCCX total supply</span></li>
-          <li><strong><a href="/q/bscwccxsupply"><span tkey="apiBSCwCCXSupplyLabel">bscwccxsupply</span></a></strong> &ndash;
-            <span tkey="apiSmartNodeCountText">BSC wCCX circulating supply</span></li>
-          <li><strong><a href="/q/bscwccxtotalsupply"><span tkey="apiBSCwCCXTotalSupplyLabel">bscwccxtotalsupply</span></a></strong> &ndash;
-            <span tkey="apiSmartNodeCountText">BSC wCCX total supply</span></li>
-          <li><strong><a href="/q/wccxtotalsupply"><span tkey="apiwCCXTotalSupplyLabel">wccxtotalsupply</span></a></strong> &ndash;
-            <span tkey="apiSmartNodeCountText">wCCX total supply (eth + bsc)</span></li>  ----->
-          </ul>
+<p style="font-family: lato;font-size: larger;color: #aaa;">
+All endpoints served via <b>xfg-api</b> REST gateway at <code style="color:#00d4ff;">http://localhost:8787/v1</code>.
+Point the gateway at any Fuego daemon with <code style="color:#00d4ff;">CORE_RPC_URL=http://your-node:18180 node server.js</code>.
+Fuego <b>v1.10.00 "AzorAhai"+</b> required for HⲶ∆T/AMM endpoints.
+</p>
+
+<!-- ───── NODE INFO ───── -->
+<h4 style="color: gold;margin-top: 25px;">Node Info</h4>
+<ul>
+  <li><strong><code style="color:cyan;">GET /v1/node/info</code></strong><br><small>Network height, difficulty, hashrate, deposit count, fee address, version</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/height</code></strong><br><small>Current block height</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/blockcount</code></strong><br><small>Total block count (JSON-RPC)</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/last_block_header</code></strong><br><small>Most recent block header (reward, difficulty, hash, timestamp)</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/block_header_by_height/:height</code></strong><br><small>Block header for a specific height</small></li>
+</ul>
+
+<!-- ───── BLOCKS & TRANSACTIONS ───── -->
+<h4 style="color: gold;margin-top: 25px;">Blocks &amp; Transactions</h4>
+<ul>
+  <li><strong><code style="color:cyan;">GET /v1/node/block/:hash</code></strong><br><small>Full block data by hash (transactions, amounts, sizes)</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/transaction/:hash</code></strong><br><small>Full transaction details by hash</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/blocks/list</code></strong><br><small>Recent blocks list (mempool-friendly summary)</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/pool/transactions</code></strong><br><small>Unconfirmed transactions in mempool</small></li>
+  <li><strong><code style="color:cyan;">POST /v1/node/reserve-proof</code></strong><br><small>Verify reserve proof signature for balance attestation</small></li>
+</ul>
+
+<!-- ───── HⲶ∆T FLATCOIN ───── -->
+<h4 style="color: gold;margin-top: 25px;">HⲶ∆T Flatcoin</h4>
+<ul>
+  <li><strong><code style="color:cyan;">GET /v1/node/heat/metrics</code></strong><br><small>HⲶ∆T supply, burned XFG, redemption price, redemption rate, PI controller state, treasury balance</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/eternal-flame</code></strong><br><small>Total XFG permanently burned via Burn2Mint (EternalFlame reserve)</small></li>
+</ul>
+
+<!-- ───── HEARTH AMM ───── -->
+<h4 style="color: gold;margin-top: 25px;">Hearth AMM (HⲶ∆T/XFG)</h4>
+<ul>
+  <li><strong><code style="color:cyan;">GET /v1/node/amm/pool</code></strong><br><small>Pool reserves (XFG/HⲶ∆T), constant-product K, spot price, LP shares, accumulated fees</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/amm/quote?from=XFG&amp;to=HEAT&amp;amount=1000</code></strong><br><small>Simulate swap output on the Hearth AMM (1% fee applied)</small></li>
+</ul>
+
+<!-- ───── FEE POOL & TREASURY ───── -->
+<h4 style="color: gold;margin-top: 25px;">Fee Pool &amp; Treasury</h4>
+<ul>
+  <li><strong><code style="color:cyan;">GET /v1/node/fee-pool</code></strong><br><small>Swap fee pool balance, distribution split (80% CDs / 20% Treasury), epoch info</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/epoch/history</code></strong><br><small>Historical epoch data — fee generation, CD yield distributed, treasury allocations</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/treasury</code></strong><br><small>Treasury wallet balance and activity</small></li>
+</ul>
+
+<!-- ───── CDs ───── -->
+<h4 style="color: gold;margin-top: 25px;">Commitment Deposits (CDs)</h4>
+<ul>
+  <li><strong><code style="color:cyan;">GET /v1/node/deposits</code></strong><br><small>All active deposits on the network</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/cd/yield?amount=1000&amp;term=900</code></strong><br><small>Estimate CD yield for a given XFG amount and term (in blocks)</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/maturing-deposits</code></strong><br><small>Deposits nearing maturity (eligible for rollover)</small></li>
+</ul>
+
+<!-- ───── ALIASES ───── -->
+<h4 style="color: gold;margin-top: 25px;">Aliases</h4>
+<ul>
+  <li><strong><code style="color:cyan;">GET /v1/node/alias/:name</code></strong><br><small>Lookup alias by name (returns address, type, block, status)</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/alias/by-address/:address</code></strong><br><small>Find alias registered to an address</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/aliases</code></strong><br><small>List all registered aliases</small></li>
+</ul>
+
+<!-- ───── SWAPS & PRICING ───── -->
+<h4 style="color: gold;margin-top: 25px;">Swaps &amp; Pricing</h4>
+<ul>
+   <li><strong><code style="color:cyan;">GET /v1/node/swaps/price</code></strong><br><small>TWAP, seed rate, composite rate, per-source oracle breakdown, Hearth ratio, HⲶ∆T USD, XFG USD range</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/swaps/offers?from=BTC&amp;to=XFG</code></strong><br><small>Active atomic swap offers by pair</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/swaps/trades?limit=50</code></strong><br><small>Recent atomic swap trades</small></li>
+</ul>
+
+<!-- ───── ZK BRIDGE ───── -->
+<h4 style="color: gold;margin-top: 25px;">ZK Bridge / Commitments</h4>
+<ul>
+   <li><strong><code style="color:cyan;">GET /v1/node/commitment/stats</code></strong><br><small>HⲶ∆T vs COLD commitment counts, total locked</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/commitment/merkle-root</code></strong><br><small>Current commitment index merkle root</small></li>
+  <li><strong><code style="color:cyan;">GET /v1/node/commitment/proof/:id</code></strong><br><small>Merkle proof for a specific commitment (bridge validation)</small></li>
+</ul>
+
+<!-- ───── DIRECT DAEMON ───── -->
+<h4 style="color: gold;margin-top: 25px;">Direct Daemon (no gateway needed)</h4>
+<ul>
+  <li><strong><code style="color:cyan;">GET /getinfo</code></strong><br><small>Native daemon info — works directly against fuegod:18180</small></li>
+  <li><strong><code style="color:cyan;">GET /getheight</code></strong><br><small>Native daemon height</small></li>
+  <li><strong><code style="color:cyan;">GET /peers</code></strong><br><small>Connected peer list</small></li>
+  <li><strong><code style="color:cyan;">GET /getethereal</code></strong><br><small>Total burned XFG (EternalFlame)</small></li>
+  <li><strong><code style="color:cyan;">GET /paymentid</code></strong><br><small>Generate a random payment ID</small></li>
+  <li><strong><code style="color:cyan;">POST /json_rpc</code></strong><br><small>JSON-RPC 2.0 gateway — all core methods (f_block_json, f_transaction_json, check_reserve_proof, getblockcount, getlastblockheader, etc.)</small></li>
+</ul>
+
       </div>
     </div>
   </div>

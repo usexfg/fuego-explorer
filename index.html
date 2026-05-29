@@ -20,6 +20,10 @@
   <link rel="stylesheet" href="css/themes/slim.css">
   <link rel="stylesheet" href="css/themes/slim.one.css">
   <link rel="stylesheet" href="css/themes/loading-indicator.css">
+  <link rel="stylesheet" href="css/themes/theme-switcher.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@400;700&family=Orbitron:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- script files -->
 
@@ -39,7 +43,7 @@
   <script src="js/palette.js"></script>
   <script src="js/slim.js"></script>
   <script src="./countries.js"></script>
-  <script src="./config.js"></script>
+  <script src="./config.js?v=2"></script>
   <script src="js/main.js"></script>
 </head>
 
@@ -60,6 +64,12 @@
         <div id="stats_updated" style="display: none;">
           <i class="fa fa-bolt"></i>
         </div>
+        <a id="network-toggle" class="network-badge" title="Click to switch network">
+          <i class="fa"></i> <span></span>
+        </a>
+        <a id="theme-toggle" class="theme-badge" title="Toggle light/dark mode">
+          <span id="theme-label">Dark</span>
+        </a>
         <!-- search-box -->
         <div class="search-box">
           <input type="text" id="txt_search" class="form-control" tplaceholder="searchHint"
@@ -106,14 +116,14 @@
         </li>
         <li class="nav-item">
           <a class="nav-link hot_link nav-link-last" data-page="cold.html" href="#coldInfo">
-            <i class="icon ion-erlenmeyer-flask"style="font-size:large;"></i>
-            <span tkey="miningPools">COLD</span>
+            <span style="font-size: 33px;margin-right: 5px;margin-bottom: 8px;color: white;">≋</span>
+            <span tkey="miningPools">HⲶ∆T/CDs</span>
           </a>
         </li>
-       <li class="nav-item">
-          <a class="nav-link hot_link nav-link-last" data-page="infra.html" href="#infra">
-            <i class="fa fa-rebel" style="font-size: 18px;margin-right: 5px;"></i>
-            <span tkey="nodes">Elder Nodes</span>
+        <li class="nav-item">
+          <a class="nav-link hot_link nav-link-last" data-page="infra.html" href="#protocol">
+            <i class="fa fa-university" style="font-size: 16px;margin-right: 5px;"></i>
+            <span tkey="heatYield">Yield Rates</span>
            </a>
         </li>
         <li class="nav-item">
