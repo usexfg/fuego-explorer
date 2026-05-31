@@ -205,6 +205,10 @@ currentPage = {
             if (xhrGetBlocks) xhrGetBlocks.abort();
         },
         init: function(){
+			loadTranslations();
+			$('[data-original-title]').each(function() {
+				$(this).attr('data-original-title', $(this).attr('data-original-title').replace(/\bXFG\b/g, symbol));
+			});
 			$.when(
 				renderInitialBlocks()
 			).then(function() {

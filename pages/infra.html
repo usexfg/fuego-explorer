@@ -8,7 +8,7 @@
       <div class="col-md-6 mg-b-20">
         <div class="card card-body bg-dark">
           <h5 class="tx-white">Hearth AMM</h5>
-          <p class="tx-gray-500">Real-time XFG/HⲶ∆T LP pool</p>
+          <p class="tx-gray-500" id="amm_subtitle">Real-time XFG/HⲶ∆T LP pool</p>
           <div id="amm_info">Loading...</div>
         </div>
       </div>
@@ -45,12 +45,13 @@
     destroy: function () { },
     init: function () {
       loadTranslations();
+      $('#amm_subtitle').text('Real-time ' + symbol + '/HⲶ∆T LP pool');
       this.update();
     },
     update: function () {
       // Hearth AMM
       $.getJSON(xfgApi + '/node/amm/pool', function(d) {
-        $('#amm_info').html(`Pool: ${d.reserve_xfg/coinUnits} XFG / ${d.reserve_heat/1000000} HⲶ∆T<br>Spot Price: ${d.spot_price}`);
+        $('#amm_info').html('Pool: ' + (d.reserve_xfg/coinUnits).toFixed(2) + ' ' + symbol + ' / ' + (d.reserve_heat/1000000).toFixed(2) + ' HⲶ∆T<br>Spot Price: ' + d.spot_price);
       });
       // CDs
       $.getJSON(xfgApi + '/node/cd/yield?amount=1000&term=900', function(d) {
