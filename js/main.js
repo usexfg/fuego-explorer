@@ -73,6 +73,12 @@ function debounce(func, wait, immediate) {
 };
 
 $(document).ready(function () {
+  $(document).ajaxError(function(e, xhr, settings) {
+    if (xhr.status === 502 || xhr.status === 0) {
+      $('#stats_updated').hide();
+    }
+  });
+
   if (donationAddress !== undefined && donationAddress !== "") {
     $("#donations").show();
     $("#donationAddress").html(donationAddress);
