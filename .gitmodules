@@ -1,0 +1,3 @@
+[submodule "xfg-api"]
+	path = xfg-api
+	url = https://github.com/usexfg/xfg-api.git
