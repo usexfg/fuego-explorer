@@ -1,40 +1,9 @@
 /* ============================================
-   Theme Switcher — CSS Variable System
-   Set by js/theme-randomizer.js
+   Theme Switcher — Light / Dark
    ============================================ */
 
-/* ── Default fallback (Midnight Galaxy-ish) ── */
-:root {
-  --bg-body: #151522;
-  --bg-header: #0c0c15;
-  --bg-navbar: #10101c;
-  --bg-footer: #10101c;
-  --surface: #0c0c15;
-  --bg-card: #1c1c2e;
-  --bg-card-header: #3a4058;
-  --bg-card-header-text: #dee4ec;
-  --bg-primary-dark: #3a4058;
-  --bg-dark-alt: #161626;
-  --color-accent: #4a4e8f;
-  --color-text: #e6e6fa;
-  --color-muted: #8190a0;
-  --color-link: #a490c2;
-  --color-link-hover: #d4c4e8;
-  --color-text-on-accent: #e6e6fa;
-  --color-white: #e6e6fa;
-  --btn-bg: #5e7a9c;
-  --btn-bg-hover: #4e6888;
-  --btn-color: #fff;
-  --border-color: #2a3040;
-  --input-bg: #1c1c2e;
-  --input-border: #2a3040;
-  --focus-color: #5e7a9c;
-  --theme-badge-bg: #3a405820;
-  --theme-badge-color: #a490c2;
-  --theme-badge-border: #3a4058;
-  --heading-font: 'Orbitron', sans-serif;
-  --body-font: 'Lato', sans-serif;
-}
+/* ── Default / No theme ── */
+body { --heading-font: 'Orbitron', sans-serif; --body-font: 'Lato', sans-serif; }
 
 /* ── Font application ── */
 body h1, body h2, body h3, body h4, body h5, body h6,
@@ -45,48 +14,6 @@ body .nav-link, body .btn, body legend, body label {
 }
 body { font-family: var(--body-font); }
 
-/* ── Core layout ── */
-body { background-color: var(--bg-body); color: var(--color-text); }
-.slim-header { background-color: var(--bg-header); border-bottom: 1px solid var(--border-color); }
-.slim-navbar { background-color: var(--bg-navbar); border-bottom: 1px solid var(--border-color); }
-.slim-footer { background-color: var(--bg-footer); border-top: 1px solid var(--border-color); }
-
-/* ── Cards ── */
-.card { background-color: var(--bg-card); border-color: var(--border-color); }
-.card-header { background-color: var(--bg-card-header); color: var(--bg-card-header-text); }
-.card-body { background-color: var(--bg-card); }
-
-/* ── Background helpers ── */
-.bg-primary-dark { background-color: var(--bg-primary-dark) !important; }
-.bg-dark { background-color: var(--bg-dark-alt) !important; }
-
-/* ── Links ── */
-.hot_link { color: var(--color-link); }
-.hot_link:hover,
-.nav-item.active .hot_link { color: var(--color-link-hover); }
-footer a, .slim-footer a { color: var(--color-link); }
-footer a:hover, .slim-footer a:hover { color: var(--color-link-hover); }
-
-/* ── Buttons ── */
-.btn-primary {
-  background-color: var(--btn-bg); border-color: var(--btn-bg); color: var(--btn-color);
-}
-.btn-primary:hover {
-  background-color: var(--btn-bg-hover); border-color: var(--btn-bg-hover);
-}
-
-/* ── Text helpers ── */
-.tx-white { color: var(--color-white); }
-.tx-gray-500 { color: var(--color-muted); }
-
-/* ── Network badge ── */
-.network-badge {
-  background: var(--bg-card-header); color: var(--color-text); border-color: var(--border-color);
-}
-.network-badge.testnet {
-  background: #ff8800; color: #fff; border-color: #ff8800;
-}
-
 /* ── Theme badge ── */
 .theme-badge {
   display: inline-flex; align-items: center; gap: 6px;
@@ -94,17 +21,134 @@ footer a:hover, .slim-footer a:hover { color: var(--color-link-hover); }
   font-size: 12px; font-weight: bold; text-transform: none;
   margin-right: 8px; border: 1px solid; user-select: none;
   white-space: nowrap;
-  background: var(--theme-badge-bg); color: var(--theme-badge-color); border-color: var(--theme-badge-border);
 }
 .theme-badge:hover { opacity: 0.85; }
 
-/* ── Focus ── */
-*:focus-visible { outline-color: var(--focus-color); }
-
-/* ── Table ── */
-.table { color: var(--color-text); }
-
-/* ── Search box ── */
-.search-box input {
-  background-color: var(--input-bg); border-color: var(--input-border); color: var(--color-text);
+/* ============================================
+   LIGHT — Sunset Boulevard (as-is)
+   ============================================ */
+body[data-theme="light"] {
+  background-color: #1a3643;
+  --heading-font: 'Playfair Display', serif;
+  --body-font: 'Lato', sans-serif;
 }
+body[data-theme="light"] .slim-header {
+  background-color: #122630; border-bottom-color: #e76f51;
+}
+body[data-theme="light"] .slim-navbar {
+  background-color: #152d3a; border-bottom-color: #e76f51;
+}
+body[data-theme="light"] .slim-footer {
+  background-color: #152d3a; border-top-color: #e76f51;
+}
+body[data-theme="light"] .card {
+  background-color: #264b5a; border-color: #e76f5133;
+}
+body[data-theme="light"] .card-header {
+  background-color: #e76f51; color: #ffffff;
+}
+body[data-theme="light"] .card-body {
+  background-color: #264b5a;
+}
+body[data-theme="light"] .bg-primary-dark {
+  background-color: #e76f51 !important;
+}
+body[data-theme="light"] .bg-dark {
+  background-color: #1d3d4a !important;
+}
+body[data-theme="light"] .hot_link { color: #e9c46a; }
+body[data-theme="light"] .hot_link:hover,
+body[data-theme="light"] .nav-item.active .hot_link { color: #f4a261; }
+body[data-theme="light"] .btn-primary {
+  background-color: #e76f51; border-color: #e76f51; color: #fff;
+}
+body[data-theme="light"] .btn-primary:hover {
+  background-color: #d45d40; border-color: #d45d40;
+}
+body[data-theme="light"] .tx-white { color: #e9c46a; }
+body[data-theme="light"] .tx-gray-500 { color: #7a9a9a; }
+body[data-theme="light"] footer a,
+body[data-theme="light"] .slim-footer a { color: #f4a261; }
+body[data-theme="light"] footer a:hover,
+body[data-theme="light"] .slim-footer a:hover { color: #e9c46a; }
+body[data-theme="light"] .network-badge {
+  background: #e76f51; color: #fff; border-color: #e76f51;
+}
+body[data-theme="light"] .network-badge.testnet {
+  background: #ff8800; color: #fff; border-color: #ff8800;
+}
+body[data-theme="light"] .theme-badge {
+  background: #e76f5120; color: #e9c46a; border-color: #e76f51;
+}
+body[data-theme="light"] *:focus-visible { outline-color: #f4a261; }
+body[data-theme="light"] .table { color: #e9c46a; }
+body[data-theme="light"] .search-box input {
+  background-color: #264b5a; border-color: #e76f5133; color: #fff;
+}
+
+/* ============================================
+   DARK — Hybrid Midnight Galaxy × Modern Minimalist
+   ============================================ */
+body[data-theme="dark"] {
+  background-color: #151522;
+  --heading-font: 'Cinzel', serif;
+  --body-font: 'Lato', sans-serif;
+}
+body[data-theme="dark"] .slim-header {
+  background-color: #0c0c15; border-bottom-color: #3a4058;
+}
+body[data-theme="dark"] .slim-navbar {
+  background-color: #10101c; border-bottom-color: #3a4058;
+}
+body[data-theme="dark"] .slim-footer {
+  background-color: #10101c; border-top-color: #3a4058;
+}
+body[data-theme="dark"] .card {
+  background-color: #1c1c2e; border-color: #2a3040;
+}
+body[data-theme="dark"] .card-header {
+  background-color: #3a4058; color: #dee4ec;
+}
+body[data-theme="dark"] .card-body {
+  background-color: #1c1c2e;
+}
+body[data-theme="dark"] .bg-primary-dark {
+  background-color: #3a4058 !important;
+}
+body[data-theme="dark"] .bg-dark {
+  background-color: #161626 !important;
+}
+body[data-theme="dark"] .hot_link { color: #8e9fb4; }
+body[data-theme="dark"] .hot_link:hover,
+body[data-theme="dark"] .nav-item.active .hot_link { color: #b8c8d8; }
+body[data-theme="dark"] .btn-primary {
+  background-color: #5e7a9c; border-color: #5e7a9c; color: #fff;
+}
+body[data-theme="dark"] .btn-primary:hover {
+  background-color: #4e6888; border-color: #4e6888;
+}
+body[data-theme="dark"] .tx-white { color: #dee4ec; }
+body[data-theme="dark"] .tx-gray-500 { color: #8190a0; }
+body[data-theme="dark"] footer a,
+body[data-theme="dark"] .slim-footer a { color: #8e9fb4; }
+body[data-theme="dark"] footer a:hover,
+body[data-theme="dark"] .slim-footer a:hover { color: #b8c8d8; }
+body[data-theme="dark"] .network-badge {
+  background: #3a4058; color: #dee4ec; border-color: #3a4058;
+}
+body[data-theme="dark"] .network-badge.testnet {
+  background: #ff8800; color: #fff; border-color: #ff8800;
+}
+body[data-theme="dark"] .theme-badge {
+  background: #3a405820; color: #8e9fb4; border-color: #3a4058;
+}
+body[data-theme="dark"] *:focus-visible { outline-color: #5e7a9c; }
+body[data-theme="dark"] .table { color: #dee4ec; }
+body[data-theme="dark"] .search-box input {
+  background-color: #1c1c2e; border-color: #2a3040; color: #dee4ec;
+}
+
+/* ============================================
+   RANDOM THEMES — set via JS inline styles
+   (data-theme matches nothing, falls through)
+   ============================================ */

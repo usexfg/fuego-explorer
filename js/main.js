@@ -100,41 +100,53 @@ $(document).ready(function () {
   var $theme = $('#theme-toggle');
   var $themeLabel = $('#theme-label');
   var $themeRandom = $('#theme-random');
+  var $randomLabel = $('#random-theme-label');
 
-  function getCurrentTheme() {
-    var saved = localStorage.getItem('xfgThemeName');
-    if (saved) {
-      var match = themeFactory.filter(function(t) { return t.name === saved; });
-      if (match.length) return match[0];
-    }
-    return null;
+  function applyLightDark(mode) {
+    clearRandomTheme();
+    document.body.setAttribute('data-theme', mode);
+    $themeLabel.text(mode === 'dark' ? 'Dark' : 'Light');
+    $randomLabel.text('🎲');
+    localStorage.setItem('xfgTheme', mode);
+    localStorage.removeItem('xfgThemeRandom');
   }
 
-  function applyAndLabel(t) {
-    applyTheme(t);
-    $themeLabel.text(t.type === 'dark' ? 'Dark' : 'Light');
+  function applyRandom(t) {
+    applyRandomTheme(t);
+    $themeLabel.text(t.name);
+    $randomLabel.text('🎲');
+    localStorage.setItem('xfgThemeRandom', t.name);
+    localStorage.removeItem('xfgTheme');
   }
 
   $theme.click(function (e) {
     e.preventDefault();
-    var cur = getCurrentTheme();
-    var nextType = (cur && cur.type === 'dark') ? 'light' : 'dark';
-    applyAndLabel(getRandomThemeByType(nextType));
+    var cur = document.body.getAttribute('data-theme');
+    applyLightDark(cur === 'dark' ? 'light' : 'dark');
   });
 
   $themeRandom.click(function (e) {
     e.preventDefault();
-    applyAndLabel(getRandomTheme());
+    applyRandom(getRandomTheme());
   });
 
-  // first load: restore saved theme or start with a random dark one
+  // Restore saved theme on load
   (function initTheme() {
-    var saved = localStorage.getItem('xfgThemeName');
-    if (saved) {
-      var match = themeFactory.filter(function(t) { return t.name === saved; });
-      if (match.length) { applyAndLabel(match[0]); return; }
+    var saved = localStorage.getItem('xfgTheme');
+    if (saved === 'light' || saved === 'dark') {
+      applyLightDark(saved);
+      return;
     }
-    applyAndLabel(getRandomThemeByType('dark'));
+    var savedRandom = localStorage.getItem('xfgThemeRandom');
+    if (savedRandom) {
+      for (var i = 0; i < themeFactory.length; i++) {
+        if (themeFactory[i].name === savedRandom) {
+          applyRandom(themeFactory[i]);
+          return;
+        }
+      }
+    }
+    applyLightDark('dark');
   })();
 });
 
