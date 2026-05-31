@@ -99,19 +99,43 @@ $(document).ready(function () {
 
   var $theme = $('#theme-toggle');
   var $themeLabel = $('#theme-label');
-  function applyTheme(t) {
-    document.body.setAttribute('data-theme', t);
-    localStorage.setItem('xfgTheme', t);
-    $themeLabel.text(t === 'dark' ? 'Dark' : 'Light');
+  var $themeRandom = $('#theme-random');
+
+  function getCurrentTheme() {
+    var saved = localStorage.getItem('xfgThemeName');
+    if (saved) {
+      var match = themeFactory.filter(function(t) { return t.name === saved; });
+      if (match.length) return match[0];
+    }
+    return null;
   }
-  var saved = localStorage.getItem('xfgTheme');
-  if (!saved || /^[0-9]+$/.test(saved)) saved = 'dark';
-  applyTheme(saved);
+
+  function applyAndLabel(t) {
+    applyTheme(t);
+    $themeLabel.text(t.type === 'dark' ? 'Dark' : 'Light');
+  }
+
   $theme.click(function (e) {
     e.preventDefault();
-    var next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
+    var cur = getCurrentTheme();
+    var nextType = (cur && cur.type === 'dark') ? 'light' : 'dark';
+    applyAndLabel(getRandomThemeByType(nextType));
   });
+
+  $themeRandom.click(function (e) {
+    e.preventDefault();
+    applyAndLabel(getRandomTheme());
+  });
+
+  // first load: restore saved theme or start with a random dark one
+  (function initTheme() {
+    var saved = localStorage.getItem('xfgThemeName');
+    if (saved) {
+      var match = themeFactory.filter(function(t) { return t.name === saved; });
+      if (match.length) { applyAndLabel(match[0]); return; }
+    }
+    applyAndLabel(getRandomThemeByType('dark'));
+  })();
 });
 
 function formatNumber(num) {
