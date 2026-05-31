@@ -86,7 +86,7 @@
     "txTransactionSecretKey": "Transaction secret key",
     "txTransactionSecretKeyHint": "Enter the transaction secret key",
     "btnShowTransaction": "SHOW TRANSACTION",
-    "txViewerTitle": "FANGO Transaction Viewer",
+    "txViewerTitle": "FUEGO Transaction Viewer",
 
     "apiTitle": "Supported APIs",
     "apiHashrateLabel": "hashrate",

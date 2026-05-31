@@ -365,6 +365,14 @@ var translate = function (data) {
     $(this).attr('data-original-title', strTr);
   });
 
+  $('[data-original-title]').each(function() {
+    $(this).attr('data-original-title', $(this).attr('data-original-title').replace(/\bXFG\b/g, symbol));
+  });
+  $('.tx-primary, .tx-secondary, label').each(function() {
+    var t = $(this).text();
+    if (t.indexOf('XFG') !== -1) $(this).text(t.replace(/\bXFG\b/g, symbol));
+  });
+  $('#calcHashSymbol').text(' ' + symbol);
 }
 
 function loadTranslations() {
