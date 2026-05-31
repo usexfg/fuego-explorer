@@ -99,55 +99,24 @@ $(document).ready(function () {
 
   var $theme = $('#theme-toggle');
   var $themeLabel = $('#theme-label');
-  var $themeRandom = $('#theme-random');
-  var $randomLabel = $('#random-theme-label');
-
-  function applyLightDark(mode) {
-    clearRandomTheme();
-    document.body.setAttribute('data-theme', mode);
-    $themeLabel.text(mode === 'dark' ? 'Dark' : 'Light');
-    $randomLabel.text('🎲');
-    localStorage.setItem('xfgTheme', mode);
-    localStorage.removeItem('xfgThemeRandom');
-  }
-
-  function applyRandom(t) {
-    applyRandomTheme(t);
-    $themeLabel.text(t.name);
-    $randomLabel.text('🎲');
-    localStorage.setItem('xfgThemeRandom', t.name);
-    localStorage.removeItem('xfgTheme');
-  }
 
   $theme.click(function (e) {
     e.preventDefault();
     var cur = document.body.getAttribute('data-theme');
-    applyLightDark(cur === 'dark' ? 'light' : 'dark');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', next);
+    $themeLabel.text(next === 'dark' ? 'Dark' : 'Light');
+    localStorage.setItem('xfgTheme', next);
   });
 
-  $themeRandom.click(function (e) {
-    e.preventDefault();
-    applyRandom(getRandomTheme());
-  });
-
-  // Restore saved theme on load
-  (function initTheme() {
-    var saved = localStorage.getItem('xfgTheme');
-    if (saved === 'light' || saved === 'dark') {
-      applyLightDark(saved);
-      return;
-    }
-    var savedRandom = localStorage.getItem('xfgThemeRandom');
-    if (savedRandom) {
-      for (var i = 0; i < themeFactory.length; i++) {
-        if (themeFactory[i].name === savedRandom) {
-          applyRandom(themeFactory[i]);
-          return;
-        }
-      }
-    }
-    applyLightDark('dark');
-  })();
+  var saved = localStorage.getItem('xfgTheme');
+  if (saved === 'light' || saved === 'dark') {
+    document.body.setAttribute('data-theme', saved);
+    $themeLabel.text(saved === 'dark' ? 'Dark' : 'Light');
+  } else {
+    document.body.setAttribute('data-theme', 'dark');
+    $themeLabel.text('Dark');
+  }
 });
 
 function formatNumber(num) {
