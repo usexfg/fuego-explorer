@@ -155,23 +155,15 @@
 	function getTransaction(){
 	if (xhrGetTransaction) xhrGetTransaction.abort();
 		xhrGetTransaction = $.ajax({
-			url: api + '/json_rpc',
-			method: "POST",
-			data: JSON.stringify({
-				jsonrpc:"2.0",
-				id: "test",
-				method:"f_transaction_json",
-				params: {
-					hash: transactionHash.val()
-				}
-			}),
+			url: restApi + '/node/transaction/' + transactionHash.val(),
+			method: "GET",
 			dataType: 'json',
 			cache: 'false',
 			success: function(data){
 			  if (data.error) {
 				wrongParamAlert(data.error.message);
 			  } else {
-				var tx = data.result;
+				var tx = data;
 				renderTransaction(tx);
 				
 				if (privateKeyType === "tx_key") {
@@ -188,25 +180,21 @@
 	function checkTxKey(){
 		if (xhrCheckTransactionByKey) xhrCheckTransactionByKey.abort();
 		xhrCheckTransactionByKey = $.ajax({
-			url: api + '/json_rpc',
+			url: restApi + '/node/check-tx-key',
 			method: "POST",
 			data: JSON.stringify({
-				jsonrpc:"2.0",
-				id: "test",
-				method:"check_tx_key",
-				params: {
-					txid: transactionHash.val(),
-					txkey: privateKey.val(),
-					address: publicAddress.val()
-				}
+				txid: transactionHash.val(),
+				txkey: privateKey.val(),
+				address: publicAddress.val()
 			}),
+			contentType: 'application/json',
 			dataType: 'json',
 			cache: 'false',
 			success: function(data){
 			  if (data.error) {
 				wrongParamAlert(data.error.message);
 			  } else {
-				var result = data.result;
+				var result = data;
 				$("#receivedAmount").html(getReadableCoins(result.amount,7));
 				
 				var outputResults = result.outputs;
@@ -233,25 +221,21 @@
 	
 		if (xhrCheckTransactionByViewKey) xhrCheckTransactionByViewKey.abort();
 		xhrCheckTransactionByViewKey = $.ajax({
-			url: api + '/json_rpc',
+			url: restApi + '/node/check-tx-view-key',
 			method: "POST",
 			data: JSON.stringify({
-				jsonrpc:"2.0",
-				id: "test",
-				method:"check_tx_with_view_key",
-				params: {
-					txid: transactionHash.val(),
-					view_key: privateViewKey,
-					address: publicAddress.val()
-				}
+				txid: transactionHash.val(),
+				view_key: privateViewKey,
+				address: publicAddress.val()
 			}),
+			contentType: 'application/json',
 			dataType: 'json',
 			cache: 'false',
 			success: function(data){
 			  if (data.error) {
 				wrongParamAlert(data.error.message);
 			  } else {
-				var result = data.result;
+				var result = data;
 				$("#receivedAmount").html(getReadableCoins(result.amount,7));
 				
 				var outputResults = result.outputs;

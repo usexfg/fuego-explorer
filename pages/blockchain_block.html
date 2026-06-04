@@ -73,20 +73,12 @@
 			renderBlock(searchBlk);
 		} else {
 			xhrGetBlock = $.ajax({
-				url: api + '/json_rpc',
-				method: "POST",
-				data: JSON.stringify({
-					jsonrpc:"2.0",
-					id: "test",
-					method:"f_block_json",
-					params: {
-						hash: urlParam('hash')
-					}
-				}),
+				url: restApi + '/node/block/' + urlParam('hash'),
+				method: "GET",
 				dataType: 'json',
 				cache: 'false',
 				success: function(data){
-					block = data.result.block;
+					block = data.block;
 					renderBlock(block);
 				}
 			});
@@ -117,21 +109,13 @@
 		makePrevBlockLink(block.prev_hash);
 		
 		$.ajax({
-			url: api + '/json_rpc',
-			method: "POST",
-			data: JSON.stringify({
-			jsonrpc: "2.0",
-			id: "test",
-			method: "getblockheaderbyheight",
-			params: {
-				height: (block.height + 1)
-			}
-			}),
+			url: restApi + '/node/block_header_by_height/' + (block.height + 1),
+			method: "GET",
 			dataType: 'json',
 			cache: 'false',
 			success: function(data){
-				if(data.result){
-				var nextBlockHash = data.result.block_header.hash;
+				if(data){
+				var nextBlockHash = data.block_header.hash;
 				}
 					if(nextBlockHash) {
 					makeNextBlockLink(nextBlockHash);

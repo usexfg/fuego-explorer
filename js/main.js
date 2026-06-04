@@ -236,7 +236,7 @@ window.onhashchange = function () {
 
 function fetchLiveStats() {
   $.ajax({
-    url: api + '/getinfo',
+    url: restApi + '/node/info',
     dataType: 'json',
     type: 'GET',
     cache: 'false'
@@ -299,7 +299,7 @@ function getBlockchainUrl(id) {
 }
 
 $(function () {
-  $.get(api + '/getinfo', function (data) {
+  $.get(restApi + '/node/info', function (data) {
     try {
       lastStats = JSON.parse(data);
     } catch (e) {
@@ -465,18 +465,14 @@ function wrongParamAlert(message, cointainer) {
 
 function checkReserveRaw(message, address, signature, callback) {
   xhrCheckReserve = $.ajax({
-    url: api + '/json_rpc',
+    url: restApi + '/node/reserve-proof',
     method: "POST",
     data: JSON.stringify({
-      jsonrpc: "2.0",
-      id: "test",
-      method: "check_reserve_proof",
-      params: {
-        message: message,
-        address: address,
-        signature: signature
-      }
+      message: message,
+      address: address,
+      signature: signature
     }),
+    contentType: 'application/json',
     dataType: 'json',
     cache: 'false',
     success: function (data) {
@@ -496,7 +492,7 @@ function checkReserve(cointainer, message, address, signature) {
     if (data.error) {
       wrongParamAlert(data.error.message, cointainer);
     } else {
-      var res = data.result;
+      var res = data;
 
       cointainer.removeClass("panel-default");
       cointainer.removeClass("panel-success");

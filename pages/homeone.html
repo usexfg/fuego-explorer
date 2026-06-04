@@ -246,35 +246,19 @@ currentPage = {
 
 function renderLastBlock(){
 $.ajax({
-    url: api + '/json_rpc',
-    method: "POST",
-    data: JSON.stringify({
-          jsonrpc:"2.0",
-          id: "test",
-          method:"getlastblockheader",
-          params: {
-  
-                }
-    }),
+    url: restApi + '/node/last_block_header',
+    method: "GET",
     dataType: 'json',
     cache: 'false',
     success: function(data){
-		last_block_hash = data.result.block_header.hash;
+		last_block_hash = data.block_header.hash;
 		$.ajax({
-			url: api + '/json_rpc',
-			method: "POST",
-			data: JSON.stringify({
-				jsonrpc:"2.0",
-				id: "test",
-				method:"f_block_json",
-				params: {
-				    hash: last_block_hash
-				}
-			}),
+			url: restApi + '/node/block/' + last_block_hash,
+			method: "GET",
 			dataType: 'json',
 			cache: 'false',
 			success: function(data){
-			block = data.result.block;
+			block = data.block;
 				updateText('totalCoins', getReadableCoins(block.alreadyGeneratedCoins,2));
 				updateText('emissionPercent', (block.alreadyGeneratedCoins / 80000088000008 * 100).toFixed(4));
 				updateText('currentReward', getReadableCoins(block.baseReward,4));
@@ -288,21 +272,14 @@ var xhrGetBlocks;
 $('#loadMoreBlocks').click(function(){
     if (xhrGetBlocks) xhrGetBlocks.abort();
         xhrGetBlocks = $.ajax({
-            url: api + '/json_rpc',
-            method: "POST",
-            data: JSON.stringify({
-                jsonrpc:"2.0",
-                id: "test",
-                method:"f_blocks_list_json",
-                params: {
-                    height: $('#blocks_rows').children().last().data('height')
-                }
-            }),
+            url: restApi + '/node/blocks/list',
+            method: "GET",
+            data: { height: $('#blocks_rows').children().last().data('height') },
             dataType: 'json',
             cache: 'false',
             success: function(data){
                                 $.when(
-                                         renderBlocks(data.result.blocks)
+                                         renderBlocks(data.blocks)
                                 ).then(function() {
                                         setTimeout(function(){
                                                 loadMoreChart();
@@ -318,22 +295,15 @@ $('#prev-page').click(function(e){
         var openHeight = (currHeight - 31 < 0) ? 0 : currHeight - 31;
 
         xhrGetBlocks = $.ajax({
-            url: api + '/json_rpc',
-            method: "POST",
-            data: JSON.stringify({
-                jsonrpc:"2.0",
-                id: "test",
-                method:"f_blocks_list_json",
-                params: {
-                    height: openHeight
-                }
-            }),
+            url: restApi + '/node/blocks/list',
+            method: "GET",
+            data: { height: openHeight },
             dataType: 'json',
             cache: 'false',
             success: function(data){
                                 $('#blocks_rows').children().remove();
                                 $.when(
-                                        renderBlocks(data.result.blocks)
+                                        renderBlocks(data.blocks)
                                 ).then(function() {
                                         setTimeout(function(){
                                                 refreshChart();
@@ -357,22 +327,15 @@ $('#next-page').click(function(e){
         var openHeight = (currHeight + 31 > lastStats.last_known_block_index) ? (lastStats.last_known_block_index) : currHeight + 31;
 
         xhrGetBlocks = $.ajax({
-            url: api + '/json_rpc',
-            method: "POST",
-            data: JSON.stringify({
-                jsonrpc:"2.0",
-                id: "test",
-                method:"f_blocks_list_json",
-                params: {
-                    height: openHeight
-                }
-            }),
+            url: restApi + '/node/blocks/list',
+            method: "GET",
+            data: { height: openHeight },
             dataType: 'json',
             cache: 'false',
             success: function(data){
                                 $('#blocks_rows').children().remove();
                                 $.when(
-                                        renderBlocks(data.result.blocks)
+                                        renderBlocks(data.blocks)
                                 ).then(function() {
                                         setTimeout(function(){
                                                 refreshChart();
@@ -415,20 +378,13 @@ $('#goto-height').keyup(function(e){
                 }
 
                         xhrGetBlocks = $.ajax({
-                                url: api + '/json_rpc',
-                                method: "POST",
-                                data: JSON.stringify({
-                                        jsonrpc:"2.0",
-                                        id: "test",
-                                        method:"f_blocks_list_json",
-                                        params: {
-                                                height: loadHeight
-                                        }
-                                }),
+                                url: restApi + '/node/blocks/list',
+                                method: "GET",
+                                data: { height: loadHeight },
                                 dataType: 'json',
                                 cache: 'false',
                                 success: function(data){
-                                        renderBlocks(data.result.blocks);
+                                        renderBlocks(data.blocks);
                                 }
                         });
     };
@@ -521,19 +477,13 @@ $('#goto-height').keyup(function(e){
 // {XFG} MemPool Transactions
 function getPoolTransactions(){
   var xhrGetPool = $.ajax({
-	url: api + '/json_rpc',
-	method: "POST",
-	data: JSON.stringify({
-		jsonrpc: "2.0",
-		id: "test",
-		method: "f_mempool_json",
-		params: {}
-	}),
+	url: restApi + '/node/pool/mempool',
+	method: "GET",
 	dataType: 'json',
 	cache: 'false',
 	success: function(newdata) {
-		if(typeof newdata.result !== "undefined") {
-			var data = newdata.result.mempool;
+		if(newdata.mempool) {
+			var data = newdata.mempool;
 			var totalAmount = 0;
 			var totalFee = 0;
 			var totalSize = 0;

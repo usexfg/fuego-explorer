@@ -129,16 +129,16 @@ function decode (url) {
   }
 
   getTx(txHash, (res) => {
-    if (res.error || !res.result) {
+    if (res.error || (!res.tx && !res.txDetails)) {
         $("#errorReason").html(res.error ? res.error.message : 'Unknown error');
         $("#errorDialog").modal();
     } else {
-        let output = 'Block containing transaction:\n' + JSON.stringify(res.result.block, null, 2)
-        output += '\n\nTransaction summary:\n' + JSON.stringify(res.result.txDetails, null, 2)
+        let output = 'Block containing transaction:\n' + JSON.stringify(res.block, null, 2)
+        output += '\n\nTransaction summary:\n' + JSON.stringify(res.txDetails, null, 2)
         output += '\n\nTransaction details:\n'
-        let txDetails = res.result.tx
+        let txDetails = res.tx
         if (account && secretKey) {
-            txDetails = checkTx(res.result.txDetails.hash, res.result.tx, secretKey, account, type)
+            txDetails = checkTx(res.txDetails.hash, res.tx, secretKey, account, type)
         }
         output += JSON.stringify(txDetails, null, 2);
 
@@ -188,17 +188,11 @@ function checkTx(hash, tx, secretKey, account, secretKeyType) {
 
 function getTx(txHash, next) {
   $.ajax({
-    url: "https://explorer.conceal.network/daemon/json_rpc",
-    method: "POST",
-    data: JSON.stringify({
-      jsonrpc:"2.0",
-      id: "0",
-      method:"f_transaction_json",
-      params: { hash: txHash }
-    }),
+    url: restApi + '/node/transaction/' + txHash,
+    method: "GET",
     dataType: "json",
     error: function(res) { alert(res.error) },
-    success: next
+    success: function(data) { next(data); }
   });
 };
 

@@ -129,20 +129,12 @@
       renderTransaction(searchTx);
     } else {
       xhrGetTransaction = $.ajax({
-        url: api + '/json_rpc',
-        method: "POST",
-        data: JSON.stringify({
-          jsonrpc: "2.0",
-          id: "test",
-          method: "f_transaction_json",
-          params: {
-            hash: urlParam('hash')
-          }
-        }),
+        url: restApi + '/node/transaction/' + urlParam('hash'),
+        method: "GET",
         dataType: 'json',
         cache: 'false',
         success: function (data) {
-          var tx = data.result;
+          var tx = data;
           renderTransaction(tx);
         }
       });

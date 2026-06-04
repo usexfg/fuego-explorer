@@ -203,22 +203,15 @@ var xhrGetBlocks;
 function getBlocks() {
   if (xhrGetBlocks) xhrGetBlocks.abort();
   xhrGetBlocks = $.ajax({
-    url: api + '/json_rpc',
-    method: 'POST',
-    data: JSON.stringify({
-      jsonrpc: '2.0',
-      id: 'test',
-      method: 'f_blocks_list_json',
-      params: {
-        height: lastStats.height - 1
-      }
-    }),
+    url: restApi + '/node/blocks/list',
+    method: 'GET',
+    data: { height: lastStats.height - 1 },
     dataType: 'json',
     cache: 'false',
     success: function (data) {
-      if (data.result) {
+      if (data.blocks) {
         $.when(
-          renderBlocks(data.result.blocks)
+          renderBlocks(data.blocks)
         ).then(function () {
           setTimeout(function () {
             calcAvgHashRate();
@@ -251,35 +244,19 @@ function calcAvgHashRate() {
 
 function renderLastBlock() {
   $.ajax({
-    url: api + '/json_rpc',
-    method: "POST",
-    data: JSON.stringify({
-      jsonrpc: "2.0",
-      id: "test",
-      method: "getlastblockheader",
-      params: {
-
-      }
-    }),
+    url: restApi + '/node/last_block_header',
+    method: "GET",
     dataType: 'json',
     cache: 'false',
     success: function (data) {
-      last_block_hash = data.result.block_header.hash;
+      last_block_hash = data.block_header.hash;
       $.ajax({
-        url: api + '/json_rpc',
-        method: "POST",
-        data: JSON.stringify({
-          jsonrpc: "2.0",
-          id: "test",
-          method: "f_block_json",
-          params: {
-            hash: last_block_hash
-          }
-        }),
+        url: restApi + '/node/block/' + last_block_hash,
+        method: "GET",
         dataType: 'json',
         cache: 'false',
         success: function (data) {
-          var block = data.result.block;
+          var block = data.block;
           lastReward = parseInt(block.baseReward);
         }
       });

@@ -42,20 +42,14 @@
 			renderTransactions(txsByPaymentId);
 		} else {
 			xhrGetTsx = $.ajax({
-				url: api + '/json_rpc',
+				url: restApi + '/node/transactions-by-payment-id',
 				method: "POST",
-				data: JSON.stringify({
-					jsonrpc:"2.0",
-					id: "test",
-					method:"k_transactions_by_payment_id",
-					params: {
-						payment_id: paymentId
-					}
-				}),
+				data: JSON.stringify({ payment_id: paymentId }),
 				dataType: 'json',
+				contentType: 'application/json',
 				cache: 'false',
 				success: function(data){
-					var txs = data.result.transactions;
+					var txs = data.transactions;
 					renderTransactions(txs);
 				}
 			});

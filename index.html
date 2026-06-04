@@ -43,7 +43,7 @@
   <script src="js/palette.js"></script>
   <script src="js/slim.js"></script>
   <script src="./countries.js"></script>
-  <script src="./config.js?v=3"></script>
+  <script src="./config.js?v=4"></script>
   <script src="js/main.js"></script>
 </head>
 
@@ -230,21 +230,13 @@
         if (xhrGetSearchBlockbyHeight) xhrGetSearchBlockbyHeight.abort();
 
         xhrGetSearchBlockbyHeight = $.ajax({
-          url: api + '/json_rpc',
-          method: "POST",
-          data: JSON.stringify({
-            jsonrpc: "2.0",
-            id: "blockbyheight",
-            method: "getblockheaderbyheight",
-            params: {
-              height: parseInt(value)
-            }
-          }),
+          url: restApi + '/node/block_header_by_height/' + parseInt(value),
+          method: "GET",
           dataType: 'json',
           cache: 'false',
           success: function (data) {
-            if (data.result) {
-              block = data.result.block_header;
+            if (data) {
+              block = data.block_header;
               window.location.href = getBlockchainUrl(block.hash);
             } else if (data.error) {
               wrongSearchAlert();
@@ -257,58 +249,36 @@
         var block, xhrGetSearchBlock;
         if (xhrGetSearchBlock) xhrGetSearchBlock.abort();
         xhrGetSearchBlock = $.ajax({
-          url: api + '/json_rpc',
-          method: "POST",
-          data: JSON.stringify({
-            jsonrpc: "2.0",
-            id: "GetSearchBlock",
-            method: "f_block_json",
-            params: {
-              hash: value
-            }
-          }),
+          url: restApi + '/node/block/' + value,
+          method: "GET",
           dataType: 'json',
           cache: 'false',
           success: function (data) {
-            if (data.result) {
-              block = data.result.block;
+            if (data) {
+              block = data.block;
               sessionStorage.setItem('searchBlock', JSON.stringify(block));
               window.location.href = getBlockchainUrl(block.hash);
             } else if (data.error) {
               $.ajax({
-                url: api + '/json_rpc',
-                method: "POST",
-                data: JSON.stringify({
-                  jsonrpc: "2.0",
-                  id: "test",
-                  method: "f_transaction_json",
-                  params: {
-                    hash: value
-                  }
-                }),
+                url: restApi + '/node/transaction/' + value,
+                method: "GET",
                 dataType: 'json',
                 cache: 'false',
                 success: function (data) {
-                  if (data.result) {
-                    sessionStorage.setItem('searchTransaction', JSON.stringify(data.result));
+                  if (data) {
+                    sessionStorage.setItem('searchTransaction', JSON.stringify(data));
                     window.location.href = getFinalUrl(transactionExplorer.replace('{id}', value));
                   } else if (data.error) {
                     xhrGetTsx = $.ajax({
-                      url: api + '/json_rpc',
+                      url: restApi + '/node/transactions-by-payment-id',
                       method: "POST",
-                      data: JSON.stringify({
-                        jsonrpc: "2.0",
-                        id: "test",
-                        method: "k_transactions_by_payment_id",
-                        params: {
-                          payment_id: value
-                        }
-                      }),
+                      data: JSON.stringify({ payment_id: value }),
+                      contentType: 'application/json',
                       dataType: 'json',
                       cache: 'false',
                       success: function (data) {
-                        if (data.result) {
-                          txsByPaymentId = data.result.transactions;
+                        if (data) {
+                          txsByPaymentId = data.transactions;
                           sessionStorage.setItem('txsByPaymentId', JSON.stringify(txsByPaymentId));
                           window.location.href = getFinalUrl(paymentIdExplorer.replace('{id}', value));
                         } else if (data.error) {

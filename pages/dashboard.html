@@ -288,20 +288,13 @@
       loadTranslations();
 
       $.ajax({
-        url: api + '/json_rpc',
-        method: "POST",
-        data: JSON.stringify({
-          jsonrpc: "2.0",
-          id: "test",
-          method: "f_blocks_list_json",
-          params: {
-            height: lastStats.last_known_block_index
-          }
-        }),
+        url: restApi + '/node/blocks/list',
+        method: "GET",
+        data: { height: lastStats.last_known_block_index },
         dataType: 'json',
         cache: 'false',
         success: function (data) {
-          renderDiffChart(data.result.blocks);
+          renderDiffChart(data.blocks);
         }
       });
      
@@ -410,52 +403,36 @@
   };
 
   function renderLastBlock() {
-    $.getJSON(api + '/getinfo', function (infoData) {
-      updateText('totalBanked', getReadableCoins2(infoData.full_deposit_amount, 0));
+    var infoData = lastStats;
+    updateText('totalBanked', getReadableCoins2(infoData.full_deposit_amount, 0));
 
-      $.ajax({
-        url: api + '/json_rpc',
-        method: "POST",
-        data: JSON.stringify({
-          jsonrpc: "2.0",
-          id: "test",
-          method: "getlastblockheader",
-          params: {}
-        }),
-        dataType: 'json',
-        cache: 'false',
-        success: function (data) {
-          last_block_hash = data.result.block_header.hash;
-          last_block_deposts = data.result.block_header.deposits;
-          $.ajax({
-            url: api + '/json_rpc',
-            method: "POST",
-            data: JSON.stringify({
-              jsonrpc: "2.0",
-              id: "test",
-              method: "f_block_json",
-              params: {
-                hash: last_block_hash
-              }
-            }),
-            dataType: 'json',
-            cache: 'false',
-            success: function (data) {
-              var block = data.result.block;
-              var circulating_supply = block.alreadyGeneratedCoins - last_block_deposts;
-              var circulating_supply_pct = ((circulating_supply / block.alreadyGeneratedCoins) * 100).toFixed(2);
-              var last_block_deposts_pct = ((last_block_deposts / block.alreadyGeneratedCoins) * 100).toFixed(2);
-              updateText('totalCoins', getReadableCoins2(block.alreadyGeneratedCoins, 0));
-              updateText('emissionPercent', getReadableCoins2(circulating_supply, 0));
-              updateText('emissionPercentPct', "(" + circulating_supply_pct + "%)");
-              updateText('currentReward', getReadableCoins(block.baseReward, 2));
-              updateText('depositCoins', getReadableCoins2(last_block_deposts, 0));
-              updateText('depositCoinsPct', "(" + last_block_deposts_pct + "%)");
-
-            }
-          });
-        }
-      });
+    $.ajax({
+      url: restApi + '/node/last_block_header',
+      method: "GET",
+      dataType: 'json',
+      cache: 'false',
+      success: function (data) {
+        last_block_hash = data.block_header.hash;
+        last_block_deposts = data.block_header.deposits;
+        $.ajax({
+          url: restApi + '/node/block/' + last_block_hash,
+          method: "GET",
+          dataType: 'json',
+          cache: 'false',
+          success: function (data) {
+            var block = data.block;
+            var circulating_supply = block.alreadyGeneratedCoins - last_block_deposts;
+            var circulating_supply_pct = ((circulating_supply / block.alreadyGeneratedCoins) * 100).toFixed(2);
+            var last_block_deposts_pct = ((last_block_deposts / block.alreadyGeneratedCoins) * 100).toFixed(2);
+            updateText('totalCoins', getReadableCoins2(block.alreadyGeneratedCoins, 0));
+            updateText('emissionPercent', getReadableCoins2(circulating_supply, 0));
+            updateText('emissionPercentPct', "(" + circulating_supply_pct + "%)");
+            updateText('currentReward', getReadableCoins(block.baseReward, 2));
+            updateText('depositCoins', getReadableCoins2(last_block_deposts, 0));
+            updateText('depositCoinsPct', "(" + last_block_deposts_pct + "%)");
+          }
+        });
+      }
     });
   }
 
